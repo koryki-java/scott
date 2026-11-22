@@ -1,0 +1,14 @@
+WITH
+aggd1 AS (
+ FIND emp e, e VIA same_department dept d, e VIA same_grade salgrade s
+ FETCH DISTINCT e.empno i1, s.grade k1, e.sal c1),
+aggm1 AS (FIND aggd1 x FETCH x.k1 k1, count() v1, sum(x.c1) v2),
+aggd2 AS (
+ FIND emp e, e VIA same_department dept d, e VIA same_grade salgrade s
+ FETCH DISTINCT d.deptno i1, s.grade k1),
+aggm2 AS (FIND aggd2 x FETCH x.k1 k1, count() v3),
+aggu AS (FIND aggm1 a FETCH a.k1 k1, a.v1 v1, a.v2 v2, to_integer(NULL) v3
+ UNIONALL
+ FIND aggm2 a FETCH a.k1 k1, to_integer(NULL) v1, to_decimal(NULL, 18, 4) v2, a.v3 v3)
+FIND aggu t
+ FETCH t.k1 grade ASC, max(t.v1) empcount, max(t.v2) sumsal, max(t.v3) deptcount

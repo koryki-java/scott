@@ -1,0 +1,17 @@
+// ----------------------------------------------------------------------------
+// B13. CROSS JOIN: each side still counts each of its rows once.
+// Question: Over all pairs of employees, how many employees are on each side,
+//   and what do they earn?
+// B9 to B13 run one self-join query with each join type. e is the employee
+// and m is the manager, joined on e.mgr = m.empno. KING has no manager, and 8
+// employees manage nobody. The join type decides which rows reach each
+// measure. No join type makes a measure count a row twice, and NULL-padded
+// rows add nothing.
+//
+// The cross join has no condition and gives 14 x 14 = 196 rows. Each side
+// still counts each employee once. A plain SUM(e.sal) gives 406350.
+// Spec: 7.6, 8.1, G2 (8.3), A.6
+// ----------------------------------------------------------------------------
+// KQL: CROSS pairs every employee with every employee and takes no condition; each side still counts each employee once.
+FIND emp e, e CROSS emp m
+FETCH agg(e.emp_count) ecount, agg(e.sum_sal) esal, agg(m.emp_count) mcount, agg(m.sum_sal) msal

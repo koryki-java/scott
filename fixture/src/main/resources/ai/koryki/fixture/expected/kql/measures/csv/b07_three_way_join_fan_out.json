@@ -1,0 +1,4 @@
+grade : INTEGER
+empcount : INTEGER
+sumsal : DECIMAL
+deptcount : INTEGER

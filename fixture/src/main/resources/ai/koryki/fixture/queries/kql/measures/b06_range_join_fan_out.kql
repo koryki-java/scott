@@ -1,0 +1,14 @@
+// ----------------------------------------------------------------------------
+// B6. Fan-out through a range join.
+// Question: For each department, how many employees are there, and how many
+//   salary grades do their salaries fall into?
+// The join condition can be any predicate over fields, not only an equality.
+// Each employee matches one salary grade, and one grade can match many
+// employees. AGG(s.grade_count) counts each grade once in each department, so
+// it gives the number of distinct grades in the department. A plain COUNT(*)
+// over the joined rows gives 3, 5, 6.
+// Spec: 7.6, G2 (8.3)
+// ----------------------------------------------------------------------------
+// KQL: a range join of the catalog (same_grade: the salary lies between losal and hisal); agg counts each employee and each grade once per department.
+FIND emp e, e VIA same_grade salgrade s
+FETCH e.deptno ASC, agg(e.emp_count) empcount, agg(s.grade_count) gradecount

@@ -1,0 +1,3 @@
+empcount : emp.emp_count
+sumsal : emp.sum_sal
+deptcount : dept.dept_count

@@ -1,0 +1,13 @@
+// ----------------------------------------------------------------------------
+// B7. Fan-out in a three-way join.
+// Question: For each salary grade, how many employees are in it, what is
+//   their total salary, and how many departments have one of them?
+// emp joins to dept and to salgrade, and the group is the salary grade.
+// AGG(d.dept_count) gives the number of departments that have an employee in
+// the grade. The join repeats each dept row once for each of its employees in
+// the grade. A plain COUNT(*) over the joined rows gives 3, 3, 2, 5, 1.
+// Spec: 7.6, G2 (8.3)
+// ----------------------------------------------------------------------------
+// KQL: the range join again, in a three-way join: the group is the salary grade, and the departments are counted once each per grade.
+FIND emp e, e VIA same_department dept d, e VIA same_grade salgrade s
+FETCH s.grade ASC, agg(e.emp_count) empcount, agg(e.sum_sal) sumsal, agg(d.dept_count) deptcount

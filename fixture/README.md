@@ -25,7 +25,7 @@ apache/ossie (`-Dossie.root=...`, evaluated on DuckDB) and writes `build/ossie-s
 
 ## Status against Ossie's suite
 
-28 of its 32 cases are translated, and the rows of all 28 equal Ossie's `expected.sql` (numbers compared at two
+All 32 of its cases are translated, and the rows of all 32 equal Ossie's `expected.sql` (numbers compared at two
 decimals, the precision of the CSV golden; rows as a multiset, the ORDER BY is in the SQL golden).
 
 | Case | Result |
@@ -35,13 +35,8 @@ decimals, the precision of the CSV golden; rows as a multiset, the ORDER BY is i
 | b10, b11, b15, b17 | equal: LEFT JOINs with the NULL-padded rows adding nothing, a RIGHT JOIN as a LEFT JOIN with the sides swapped (`m [empno = mgr] + emp e`), an empty group with 0 and NULLs |
 | b16 | equal: a `FILTER` on an optionally linked alias is rendered in the ON clause of the LEFT JOIN by core, so the departments stay |
 | b19 | equal, as a semi join: `EXISTS (e VIA same_department dept x, x [deptno = deptno] emp s FILTER ...)` |
-
-### The 4 that are open, and why
-
-| Case | What it needs | Where the gap is |
-|---|---|---|
-| b12 (FULL JOIN), b13 (CROSS JOIN) | KQL has no FULL or CROSS join; two sources without a link get an inferred join | KQL, not the rewriter |
-| b06, b07 (range join) | `e.sal BETWEEN s.losal AND s.hisal`: a link is an equality of columns, so `salgrade` cannot be joined | KQL / the catalog |
+| b06, b07 | equal: the range join is a relationship of the catalog (`fk_emp_salgrade`, `condition: start.sal BETWEEN end.losal AND end.hisal`, link `same_grade`), so the query is `e VIA same_grade salgrade s` |
+| b12, b13 | equal: `e VIA same_manager FULL emp m` and `e CROSS emp m`. A FULL join pads both sides, so the rewriter writes `count()` as `count(x.i1)` as for `+` |
 
 What equal means, and does not: koryki's KQL, rewritten by the measures project, gives the rows Ossie's reference SQL
 gives, on the same data. It is not that Ossie's SQL is accepted: the cases are rewritten into KQL by hand, and the

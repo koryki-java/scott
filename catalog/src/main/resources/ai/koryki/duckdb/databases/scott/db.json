@@ -27,6 +27,16 @@
       ],
       "startTable": "emp",
       "symmetric": true
+    },
+    {
+      "comment": "The salary grade whose range holds the salary of the employee.",
+      "condition": "start.sal BETWEEN end.losal AND end.hisal",
+      "endColumns": [],
+      "endTable": "salgrade",
+      "name": "fk_emp_salgrade",
+      "startColumns": [],
+      "startTable": "emp",
+      "symmetric": true
     }
   ],
   "tables": [

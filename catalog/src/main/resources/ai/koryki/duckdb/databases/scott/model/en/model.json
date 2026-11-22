@@ -134,6 +134,15 @@
       "relations": [
         "fk_emp_mgr"
       ]
+    },
+    {
+      "comment": "Salary grade of the employee.",
+      "description": "Joins emp to salgrade: not by a key, by the range of the grade -- the salary lies between its losal and hisal. An employee matches one grade, a grade many employees.",
+      "label": "salary grade",
+      "name": "same_grade",
+      "relations": [
+        "fk_emp_salgrade"
+      ]
     }
   ]
 }
