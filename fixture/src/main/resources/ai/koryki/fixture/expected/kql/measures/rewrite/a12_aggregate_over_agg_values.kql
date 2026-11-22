@@ -1,7 +1,11 @@
 WITH
 d AS (FIND emp e
- FETCH e.deptno k, sum(e.sal) deptsal)
+ FETCH e.deptno k, sum(e.sal) deptsal),
+q2aggd1 AS (
+ FIND emp e
+ FETCH DISTINCT e.empno i1, 'avg salary per emp' k1, e.sal c1),
+q2aggm1 AS (FIND q2aggd1 x FETCH x.k1 k1, avg(to_double(x.c1)) v1)
 FIND d x FETCH 'avg payroll per dept' metric, avg(to_double(x.deptsal)) amount
 UNIONALL
-FIND emp e
- FETCH 'avg salary per emp' metric, avg(to_double(e.sal)) amount
+FIND q2aggm1 t
+ FETCH t.k1 metric, max(t.v1) amount
