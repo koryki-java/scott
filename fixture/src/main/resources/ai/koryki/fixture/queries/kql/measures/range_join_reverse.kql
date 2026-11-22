@@ -1,0 +1,5 @@
+// The range relationship read from the other side: salgrade first, then emp. The condition of
+// fk_emp_salgrade is declared from emp to salgrade and is turned round (start and end swapped) for
+// this direction. The rows are those of b07 without the department: employees per salary grade.
+FIND salgrade s, s VIA same_grade emp e
+FETCH s.grade ASC, agg(e.emp_count) empcount, agg(s.grade_count) gradecount

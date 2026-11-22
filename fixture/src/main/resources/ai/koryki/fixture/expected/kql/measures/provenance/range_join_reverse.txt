@@ -1,0 +1,2 @@
+empcount : emp.emp_count
+gradecount : salgrade.grade_count

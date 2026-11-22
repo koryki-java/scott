@@ -1,0 +1,14 @@
+WITH
+aggd1 AS (
+ FIND salgrade s, s VIA same_grade emp e
+ FETCH DISTINCT e.empno i1, s.grade k1),
+aggm1 AS (FIND aggd1 x FETCH x.k1 k1, count() v1),
+aggd2 AS (
+ FIND salgrade s, s VIA same_grade emp e
+ FETCH DISTINCT s.grade i1, s.grade k1),
+aggm2 AS (FIND aggd2 x FETCH x.k1 k1, count() v2),
+aggu AS (FIND aggm1 a FETCH a.k1 k1, a.v1 v1, to_integer(NULL) v2
+ UNIONALL
+ FIND aggm2 a FETCH a.k1 k1, to_integer(NULL) v1, a.v2 v2)
+FIND aggu t
+ FETCH t.k1 grade ASC, max(t.v1) empcount, max(t.v2) gradecount
