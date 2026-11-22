@@ -1,0 +1,4 @@
+// Ossie a10: the CTE of the case only restricts the rows, so its WHERE is the FILTER here. The pass-through of measures by a CTE is not tested.
+FIND emp e
+FILTER e.job IN ('CLERK', 'SALESMAN')
+FETCH e.deptno ASC, agg(e.sum_sal) payroll, agg(e.emp_count) headcount

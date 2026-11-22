@@ -1,0 +1,4 @@
+// Ossie b19: the departments that have a salesman, as a semi join (EXISTS): no row of emp is repeated.
+FIND emp e
+FILTER EXISTS (e VIA same_department dept x, x [deptno = deptno] emp s FILTER s.job = 'SALESMAN')
+FETCH e.job ASC, agg(e.sum_sal) sumsal

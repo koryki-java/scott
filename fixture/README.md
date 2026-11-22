@@ -25,17 +25,28 @@ apache/ossie (`-Dossie.root=...`, evaluated on DuckDB) and writes `build/ossie-s
 
 ## Status against Ossie's suite
 
-16 of its 32 cases are translated, and the rows of all 16 equal Ossie's `expected.sql` (numbers compared at two
+19 of its 32 cases are translated, and the rows of all 19 equal Ossie's `expected.sql` (numbers compared at two
 decimals, the precision of the CSV golden; rows as a multiset, the ORDER BY is in the SQL golden).
 
 | Case | Result |
 |---|---|
-| a01-a07 (grand total, group, filter, HAVING on an unselected measure, scalar operations, NULLs, empty input) | equal |
-| b01, b02, b04, b05, b08, b09, b14, b18, b20 (inner joins, self joins, one side counted once, ratio, HAVING) | equal |
-| a08-a12, b03, b06, b07, b10-b13, b15-b17, b19 | not translated |
+| a01-a08, a10 | equal. a08 groups by `year(hiredate)`. a10 is the CTE's `WHERE` as a `FILTER`: what a CTE passing measures through means is not tested |
+| b01, b02, b04, b05, b08, b09, b14, b18, b20 | equal (inner joins, self joins, one side counted once, ratio, HAVING) |
+| b19 | equal, as a semi join: `EXISTS (e VIA same_department dept x, x [deptno = deptno] emp s FILTER ...)` |
 
-What equal means, and does not: koryki's KQL, rewritten by the measures project, gives the rows Ossie's
-reference SQL gives, on the same data. It is not that Ossie's SQL is accepted: the cases are rewritten into KQL by
-hand, and the measures are written by hand until a converter exists. The cases not translated use what the rewriter
-refuses today (outer links, `WITH`, sub-queries, `ROLLUP`), a join that is not a relationship (`salgrade` by a range,
-a cross join), or have not been looked at yet; none was tried and failed.
+### The 13 that are open, and why
+
+| Case | What it needs | Where the gap is |
+|---|---|---|
+| b10, b15, b17 (LEFT JOIN) | an outer link `+` in the query; the layer of a measure must drop NULL-padded rows (its identity is NULL), or `count()` counts them | the rewriter refuses `+` today |
+| b11 (RIGHT JOIN) | the same, with the sides swapped (`FIND emp m, m + emp e`), KQL has no RIGHT | the rewriter |
+| b16 (ON filter of a LEFT JOIN) | a filter in the ON clause of an optional link; a `FILTER` is a WHERE and would drop the padded row | KQL (no known way to say it), then the rewriter |
+| b12 (FULL JOIN), b13 (CROSS JOIN) | KQL has no FULL or CROSS join; two sources without a link get an inferred join | KQL, not the rewriter |
+| b06, b07 (range join) | `e.sal BETWEEN s.losal AND s.hisal`: a link is an equality of columns, so `salgrade` cannot be joined | KQL / the catalog |
+| a09 (ROLLUP) | one evaluation per grouping set, the total row not the average of averages | the rewriter refuses ROLLUP; a union of the sets would do it |
+| a11 (AGG in a scalar sub-query), b03 (top-N join as filter) | `agg` inside a sub-query | the rewriter refuses `agg` in sub-queries |
+| a12 (outer aggregate over AGG values, UNION ALL) | a query on top of an `agg` query, and a set operation | the rewriter refuses a `FIND` over its own result and set operations |
+
+What equal means, and does not: koryki's KQL, rewritten by the measures project, gives the rows Ossie's reference SQL
+gives, on the same data. It is not that Ossie's SQL is accepted: the cases are rewritten into KQL by hand, and the
+measures are written by hand until a converter exists.

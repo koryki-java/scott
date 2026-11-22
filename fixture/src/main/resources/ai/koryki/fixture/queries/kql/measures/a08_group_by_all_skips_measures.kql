@@ -1,0 +1,3 @@
+// Ossie a08: the group key is an expression on a field.
+FIND emp e
+FETCH year(e.hiredate) hireyear ASC, agg(e.emp_count) empcount, agg(e.sum_sal) sumsal

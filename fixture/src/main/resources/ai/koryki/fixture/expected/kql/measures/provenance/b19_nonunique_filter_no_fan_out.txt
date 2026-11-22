@@ -1,0 +1,1 @@
+sumsal : emp.sum_sal

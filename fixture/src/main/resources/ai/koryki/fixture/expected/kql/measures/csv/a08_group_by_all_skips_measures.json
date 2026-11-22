@@ -1,0 +1,3 @@
+hireyear : INTEGER
+empcount : INTEGER
+sumsal : DECIMAL
