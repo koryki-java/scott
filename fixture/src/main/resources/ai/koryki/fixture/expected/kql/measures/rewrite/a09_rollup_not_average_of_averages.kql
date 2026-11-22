@@ -1,0 +1,12 @@
+WITH
+aggd1 AS (
+ FIND emp e
+ FETCH DISTINCT e.empno i1, e.deptno k1, e.sal c1),
+aggm1s1 AS (FIND aggd1 x FETCH x.k1 k1, count() v1, avg(to_double(x.c1)) v2),
+aggm1s0 AS (FIND aggd1 x FETCH count() v1, avg(to_double(x.c1)) v2),
+aggu AS (FIND aggm1s1 a FETCH 1 g, a.k1 k1, a.v1 v1, a.v2 v2
+ UNIONALL
+ FIND aggm1s0 a FETCH 0 g, to_integer(NULL) k1, a.v1 v1, a.v2 v2),
+aggr AS (FIND aggu t FETCH t.g g, t.k1 k1, max(t.v1) v1, max(t.v2) v2)
+FIND aggr r
+ FETCH r.k1 deptno ASC, r.v1 empcount, r.v2 avgsal

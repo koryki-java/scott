@@ -1,0 +1,3 @@
+// Ossie a09: ROLLUP evaluates a measure again for each grouping set: the total row is the average over all employees, not the average of the department averages.
+FIND emp e
+FETCH e.deptno ASC, agg(e.emp_count) empcount, agg(e.avg_sal) avgsal ROLLUP

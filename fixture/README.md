@@ -25,24 +25,23 @@ apache/ossie (`-Dossie.root=...`, evaluated on DuckDB) and writes `build/ossie-s
 
 ## Status against Ossie's suite
 
-23 of its 32 cases are translated, and the rows of all 23 equal Ossie's `expected.sql` (numbers compared at two
+24 of its 32 cases are translated, and the rows of all 24 equal Ossie's `expected.sql` (numbers compared at two
 decimals, the precision of the CSV golden; rows as a multiset, the ORDER BY is in the SQL golden).
 
 | Case | Result |
 |---|---|
-| a01-a08, a10 | equal. a08 groups by `year(hiredate)`. a10 is the CTE's `WHERE` as a `FILTER`: what a CTE passing measures through means is not tested |
+| a01-a10 | equal. a09 is ROLLUP, one evaluation per grouping set (total row 2073.21, not the average of averages). a08 groups by `year(hiredate)`. a10 is the CTE's `WHERE` as a `FILTER`: what a CTE passing measures through means is not tested |
 | b01, b02, b04, b05, b08, b09, b14, b18, b20 | equal (inner joins, self joins, one side counted once, ratio, HAVING) |
 | b10, b11, b15, b17 | equal: LEFT JOINs with the NULL-padded rows adding nothing, a RIGHT JOIN as a LEFT JOIN with the sides swapped (`m [empno = mgr] + emp e`), an empty group with 0 and NULLs |
 | b19 | equal, as a semi join: `EXISTS (e VIA same_department dept x, x [deptno = deptno] emp s FILTER ...)` |
 
-### The 9 that are open, and why
+### The 8 that are open, and why
 
 | Case | What it needs | Where the gap is |
 |---|---|---|
 | b16 (ON filter of a LEFT JOIN) | a filter in the ON clause of an optional link; a `FILTER` is a WHERE and would drop the padded row | KQL (no known way to say it), then the rewriter |
 | b12 (FULL JOIN), b13 (CROSS JOIN) | KQL has no FULL or CROSS join; two sources without a link get an inferred join | KQL, not the rewriter |
 | b06, b07 (range join) | `e.sal BETWEEN s.losal AND s.hisal`: a link is an equality of columns, so `salgrade` cannot be joined | KQL / the catalog |
-| a09 (ROLLUP) | one evaluation per grouping set, the total row not the average of averages | the rewriter refuses ROLLUP; a union of the sets would do it |
 | a11 (AGG in a scalar sub-query), b03 (top-N join as filter) | `agg` inside a sub-query | the rewriter refuses `agg` in sub-queries |
 | a12 (outer aggregate over AGG values, UNION ALL) | a query on top of an `agg` query, and a set operation | the rewriter refuses a `FIND` over its own result and set operations |
 

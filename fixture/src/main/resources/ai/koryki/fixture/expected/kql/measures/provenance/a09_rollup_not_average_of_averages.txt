@@ -1,0 +1,2 @@
+empcount : emp.emp_count
+avgsal : emp.avg_sal
