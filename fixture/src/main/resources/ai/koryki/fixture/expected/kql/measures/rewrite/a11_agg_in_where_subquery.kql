@@ -1,0 +1,13 @@
+WITH
+q1aggd1 AS (
+ FIND emp x
+ FETCH DISTINCT x.empno i1, x.sal c1),
+q1aggm1 AS (FIND q1aggd1 x FETCH avg(to_double(x.c1)) v1),
+q2aggd1 AS (
+ FIND emp e
+ FILTER e.sal > (FIND q1aggm1 t
+ FETCH max(t.v1) avg_sal)
+ FETCH DISTINCT e.empno i1, e.deptno k1),
+q2aggm1 AS (FIND q2aggd1 x FETCH x.k1 k1, count() v1)
+FIND q2aggm1 t
+ FETCH t.k1 deptno ASC, max(t.v1) empcount

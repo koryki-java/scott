@@ -1,0 +1,5 @@
+// Ossie a12: an ordinary aggregate over agg() values, and a set operation: the department payrolls are a block, the second branch reads a measure directly.
+WITH d AS (FIND emp e FETCH e.deptno k, agg(e.sum_sal) deptsal)
+FIND d x FETCH 'avg payroll per dept' metric, avg(to_double(x.deptsal)) amount
+UNIONALL
+FIND emp e FETCH 'avg salary per emp' metric, agg(e.avg_sal) amount

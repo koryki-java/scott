@@ -1,0 +1,4 @@
+// Ossie a11: agg() in a scalar sub-query of the FILTER: employees above the company average, per department.
+FIND emp e
+FILTER e.sal > (FIND emp x FETCH agg(x.avg_sal))
+FETCH e.deptno ASC, agg(e.emp_count) empcount

@@ -1,0 +1,1 @@
+amount : emp.avg_sal

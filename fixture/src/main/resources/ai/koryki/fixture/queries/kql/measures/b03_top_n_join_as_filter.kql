@@ -1,0 +1,5 @@
+// Ossie b03: the two departments with the largest payroll, as a block with sort and limit; the main query keeps the employees of those departments.
+WITH top AS (FIND emp x FETCH x.deptno d, agg(x.sum_sal) s DESC LIMIT 2)
+FIND emp e
+FILTER e.deptno IN (FIND top t FETCH t.d)
+FETCH e.job ASC, agg(e.sum_sal) sumsal

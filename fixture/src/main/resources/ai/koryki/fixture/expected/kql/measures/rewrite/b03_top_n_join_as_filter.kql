@@ -1,0 +1,15 @@
+WITH
+q1aggd1 AS (
+ FIND emp x
+ FETCH DISTINCT x.empno i1, x.deptno k1, x.sal c1),
+q1aggm1 AS (FIND q1aggd1 x FETCH x.k1 k1, sum(x.c1) v1),
+top AS (FIND q1aggm1 t
+ FETCH t.k1 d, max(t.v1) s DESC
+ LIMIT 2),
+q2aggd1 AS (
+ FIND emp e
+ FILTER e.deptno IN (FIND top t FETCH t.d)
+ FETCH DISTINCT e.empno i1, e.job k1, e.sal c1),
+q2aggm1 AS (FIND q2aggd1 x FETCH x.k1 k1, sum(x.c1) v1)
+FIND q2aggm1 t
+ FETCH t.k1 job ASC, max(t.v1) sumsal
