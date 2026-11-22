@@ -1,0 +1,4 @@
+// Ossie b02: a filter on the joined table.
+FIND emp e, e VIA same_department dept d
+FILTER d.loc = 'NEW YORK'
+FETCH e.job ASC, agg(e.sum_sal) sumsal, agg(e.emp_count) empcount

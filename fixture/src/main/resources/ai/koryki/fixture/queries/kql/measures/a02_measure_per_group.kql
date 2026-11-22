@@ -1,0 +1,3 @@
+// Ossie a02: measures per group.
+FIND emp e
+FETCH e.deptno ASC, agg(e.sum_sal) sumsal, agg(e.emp_count) empcount

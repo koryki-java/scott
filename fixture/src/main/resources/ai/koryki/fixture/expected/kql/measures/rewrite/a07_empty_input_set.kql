@@ -1,0 +1,8 @@
+WITH
+aggd1 AS (
+ FIND emp e
+ FILTER e.deptno = 40
+ FETCH DISTINCT e.empno i1, e.sal c1),
+aggm1 AS (FIND aggd1 x FETCH count() v1, sum(x.c1) v2, avg(to_double(x.c1)) v3)
+FIND aggm1 t
+ FETCH max(t.v1) empcount, max(t.v2) sumsal, max(t.v3) avgsal

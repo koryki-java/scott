@@ -1,0 +1,3 @@
+empcount : INTEGER
+sumsal : DECIMAL
+avgsal : FLOAT

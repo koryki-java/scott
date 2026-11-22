@@ -1,0 +1,3 @@
+// Ossie b14: a ratio of measures of two tables.
+FIND dept d, d VIA same_department emp e
+FETCH agg(d.dept_count) deptcount, agg(e.emp_count) empcount, agg(e.sum_sal) sumsal, to_double(agg(e.sum_sal)) / agg(d.dept_count) salperdept

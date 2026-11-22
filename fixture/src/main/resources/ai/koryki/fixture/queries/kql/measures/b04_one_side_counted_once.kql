@@ -1,0 +1,3 @@
+// Ossie b04: the one side of the join is counted once per department, not once per employee.
+FIND emp e, e VIA same_department dept d
+FETCH e.job ASC, agg(d.dept_count) deptcount, agg(e.emp_count) empcount

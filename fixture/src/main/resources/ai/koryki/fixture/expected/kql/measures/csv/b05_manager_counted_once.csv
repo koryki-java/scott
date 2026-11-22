@@ -1,0 +1,5 @@
+"job", "empcount", "managers", "managerssal"
+"ANALYST", "2", "1", "2975"
+"CLERK", "4", "4", "11300"
+"MANAGER", "3", "1", "5000"
+"SALESMAN", "4", "1", "2850"

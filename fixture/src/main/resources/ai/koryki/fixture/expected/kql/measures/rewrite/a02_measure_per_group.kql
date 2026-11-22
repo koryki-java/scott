@@ -1,0 +1,7 @@
+WITH
+aggd1 AS (
+ FIND emp e
+ FETCH DISTINCT e.empno i1, e.deptno k1, e.sal c1),
+aggm1 AS (FIND aggd1 x FETCH x.k1 k1, sum(x.c1) v1, count() v2)
+FIND aggm1 t
+ FETCH t.k1 deptno ASC, max(t.v1) sumsal, max(t.v2) empcount

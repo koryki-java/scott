@@ -1,0 +1,4 @@
+// Ossie a07: an empty input set still gives one row, count 0 and NULL sums.
+FIND emp e
+FILTER e.deptno = 40
+FETCH agg(e.emp_count) empcount, agg(e.sum_sal) sumsal, agg(e.avg_sal) avgsal

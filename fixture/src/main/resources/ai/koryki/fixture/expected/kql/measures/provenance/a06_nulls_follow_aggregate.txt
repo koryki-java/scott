@@ -1,0 +1,4 @@
+empcount : emp.emp_count
+commcount : emp.comm_count
+sumcomm : emp.sum_comm
+avgcomm : emp.avg_comm

@@ -1,0 +1,226 @@
+{
+  "description": "The SCOTT sample schema (dept, emp, salgrade) as loaded by the query compliance cases of Apache Ossie. Values are those of the SCOTT tables in Apache Calcite.",
+  "label": "scott",
+  "name": "scott",
+  "schemaPrefix": "scott",
+  "relations": [
+    {
+      "endColumns": [
+        "deptno"
+      ],
+      "endTable": "dept",
+      "name": "fk_emp_dept",
+      "startColumns": [
+        "deptno"
+      ],
+      "startTable": "emp",
+      "symmetric": true
+    },
+    {
+      "endColumns": [
+        "empno"
+      ],
+      "endTable": "emp",
+      "name": "fk_emp_mgr",
+      "startColumns": [
+        "mgr"
+      ],
+      "startTable": "emp",
+      "symmetric": true
+    }
+  ],
+  "tables": [
+    {
+      "columns": [
+        {
+          "concept": {
+            "comment": "Primary key of the department.",
+            "dialectType": "INTEGER",
+            "label": "Department Number",
+            "typeFamily": "INTEGER"
+          },
+          "name": "deptno",
+          "namePos": 0,
+          "nullable": false,
+          "pkPos": 1
+        },
+        {
+          "concept": {
+            "comment": "Name of the department.",
+            "dialectType": "VARCHAR",
+            "label": "Department Name",
+            "typeFamily": "TEXT"
+          },
+          "name": "dname",
+          "namePos": 0,
+          "nullable": false,
+          "pkPos": 0
+        },
+        {
+          "concept": {
+            "comment": "City where the department is.",
+            "dialectType": "VARCHAR",
+            "label": "Location",
+            "typeFamily": "TEXT"
+          },
+          "name": "loc",
+          "namePos": 0,
+          "nullable": false,
+          "pkPos": 0
+        }
+      ],
+      "comment": "A department.",
+      "description": "Department of the company; the four rows of the SCOTT sample.",
+      "label": "dept",
+      "name": "dept"
+    },
+    {
+      "columns": [
+        {
+          "concept": {
+            "comment": "Primary key of the employee.",
+            "dialectType": "INTEGER",
+            "label": "Employee Number",
+            "typeFamily": "INTEGER"
+          },
+          "name": "empno",
+          "namePos": 0,
+          "nullable": false,
+          "pkPos": 1
+        },
+        {
+          "concept": {
+            "comment": "Name of the employee.",
+            "dialectType": "VARCHAR",
+            "label": "Employee Name",
+            "typeFamily": "TEXT"
+          },
+          "name": "ename",
+          "namePos": 0,
+          "nullable": false,
+          "pkPos": 0
+        },
+        {
+          "concept": {
+            "comment": "Job title.",
+            "dialectType": "VARCHAR",
+            "label": "Job",
+            "typeFamily": "TEXT"
+          },
+          "name": "job",
+          "namePos": 0,
+          "nullable": false,
+          "pkPos": 0
+        },
+        {
+          "concept": {
+            "comment": "Employee number of the manager; blank for the president.",
+            "dialectType": "INTEGER",
+            "label": "Manager",
+            "typeFamily": "INTEGER"
+          },
+          "name": "mgr",
+          "namePos": 0,
+          "nullable": true,
+          "pkPos": 0
+        },
+        {
+          "concept": {
+            "comment": "Day the employee was hired.",
+            "dialectType": "DATE",
+            "label": "Hire Date",
+            "typeFamily": "DATE"
+          },
+          "name": "hiredate",
+          "namePos": 0,
+          "nullable": false,
+          "pkPos": 0
+        },
+        {
+          "concept": {
+            "comment": "Monthly salary.",
+            "dialectType": "DECIMAL(7,2)",
+            "label": "Salary",
+            "typeFamily": "DECIMAL"
+          },
+          "name": "sal",
+          "namePos": 0,
+          "nullable": false,
+          "pkPos": 0
+        },
+        {
+          "concept": {
+            "comment": "Commission; blank for employees who get none, zero is a commission of zero.",
+            "dialectType": "DECIMAL(7,2)",
+            "label": "Commission",
+            "typeFamily": "DECIMAL"
+          },
+          "name": "comm",
+          "namePos": 0,
+          "nullable": true,
+          "pkPos": 0
+        },
+        {
+          "concept": {
+            "comment": "Department of the employee.",
+            "dialectType": "INTEGER",
+            "label": "Department Number",
+            "typeFamily": "INTEGER"
+          },
+          "name": "deptno",
+          "namePos": 0,
+          "nullable": false,
+          "pkPos": 0
+        }
+      ],
+      "comment": "An employee.",
+      "description": "Employee of the company, with manager and department.",
+      "label": "emp",
+      "name": "emp"
+    },
+    {
+      "columns": [
+        {
+          "concept": {
+            "comment": "Primary key of the salary grade.",
+            "dialectType": "INTEGER",
+            "label": "Grade",
+            "typeFamily": "INTEGER"
+          },
+          "name": "grade",
+          "namePos": 0,
+          "nullable": false,
+          "pkPos": 1
+        },
+        {
+          "concept": {
+            "comment": "Lowest salary of the grade.",
+            "dialectType": "INTEGER",
+            "label": "Low Salary",
+            "typeFamily": "INTEGER"
+          },
+          "name": "losal",
+          "namePos": 0,
+          "nullable": false,
+          "pkPos": 0
+        },
+        {
+          "concept": {
+            "comment": "Highest salary of the grade.",
+            "dialectType": "INTEGER",
+            "label": "High Salary",
+            "typeFamily": "INTEGER"
+          },
+          "name": "hisal",
+          "namePos": 0,
+          "nullable": false,
+          "pkPos": 0
+        }
+      ],
+      "comment": "A salary grade.",
+      "description": "Salary range of a grade. It is joined to emp by a range (sal between losal and hisal), not by a key, so it has no relation.",
+      "label": "salgrade",
+      "name": "salgrade"
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+// Ossie b08: colleagues of the same department, a many-to-many join through dept.
+FIND emp e, e VIA same_department dept d, d VIA same_department emp c
+FETCH e.deptno ASC, agg(e.sum_sal) sumsal, agg(c.emp_count) colleagues

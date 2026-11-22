@@ -1,0 +1,14 @@
+WITH
+aggd1 AS (
+ FIND emp e, e VIA same_manager emp m
+ FETCH DISTINCT e.empno i1, e.job k1),
+aggm1 AS (FIND aggd1 x FETCH x.k1 k1, count() v1),
+aggd2 AS (
+ FIND emp e, e VIA same_manager emp m
+ FETCH DISTINCT m.empno i1, e.job k1, m.sal c1),
+aggm2 AS (FIND aggd2 x FETCH x.k1 k1, count() v2, sum(x.c1) v3),
+aggu AS (FIND aggm1 a FETCH a.k1 k1, a.v1 v1, to_integer(NULL) v2, to_decimal(NULL, 18, 4) v3
+ UNIONALL
+ FIND aggm2 a FETCH a.k1 k1, to_integer(NULL) v1, a.v2 v2, a.v3 v3)
+FIND aggu t
+ FETCH t.k1 job ASC, max(t.v1) empcount, max(t.v2) managers, max(t.v3) managerssal

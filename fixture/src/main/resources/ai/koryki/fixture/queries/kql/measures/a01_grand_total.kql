@@ -1,0 +1,3 @@
+// Ossie a01: two measures of one table, no group key.
+FIND emp e
+FETCH agg(e.sum_sal) sumsal, agg(e.emp_count) empcount

@@ -1,0 +1,9 @@
+WITH
+aggd1 AS (
+ FIND emp e
+ FETCH DISTINCT e.empno i1, e.job k1, e.sal c1),
+aggm1 AS (FIND aggd1 x FETCH x.k1 k1, sum(x.c1) v1, count() v2)
+FIND aggm1 t
+ FILTER max(t.v2) > 2
+ FETCH t.k1 job, max(t.v1) sumsal DESC
+ LIMIT 3

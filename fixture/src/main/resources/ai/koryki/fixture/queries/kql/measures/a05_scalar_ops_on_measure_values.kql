@@ -1,0 +1,3 @@
+// Ossie a05: scalar operations on measure values.
+FIND emp e
+FETCH e.deptno ASC, to_double(agg(e.sum_sal)) / agg(e.emp_count) salperemp, agg(e.avg_sal) avgsal, agg(e.sum_sal) + coalesce(agg(e.sum_comm), 0) totalpay

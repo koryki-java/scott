@@ -1,0 +1,70 @@
+{
+  "tables": {
+    "emp": [
+      {
+        "name": "sum_sal",
+        "label": "Total salary",
+        "description": "Total salary",
+        "expression": "sum(sal)",
+        "concept": {
+          "typeFamily": "DECIMAL"
+        }
+      },
+      {
+        "name": "avg_sal",
+        "label": "Average salary",
+        "description": "Average salary",
+        "expression": "avg(to_double(sal))",
+        "concept": {
+          "typeFamily": "FLOAT"
+        }
+      },
+      {
+        "name": "emp_count",
+        "label": "Employees",
+        "description": "Number of employees",
+        "expression": "count()"
+      },
+      {
+        "name": "comm_count",
+        "label": "Employees with commission",
+        "description": "Number of employees that have a commission",
+        "expression": "count(comm)"
+      },
+      {
+        "name": "sum_comm",
+        "label": "Total commission",
+        "description": "Total commission",
+        "expression": "sum(comm)",
+        "concept": {
+          "typeFamily": "DECIMAL"
+        }
+      },
+      {
+        "name": "avg_comm",
+        "label": "Average commission",
+        "description": "Average commission, over the employees that have a commission",
+        "expression": "avg(to_double(comm))",
+        "concept": {
+          "typeFamily": "FLOAT"
+        }
+      }
+    ],
+    "dept": [
+      {
+        "name": "dept_count",
+        "label": "Departments",
+        "description": "Number of departments",
+        "expression": "count()"
+      }
+    ],
+    "salgrade": [
+      {
+        "name": "grade_count",
+        "label": "Salary grades",
+        "description": "Number of salary grades",
+        "expression": "count()"
+      }
+    ]
+  }
+}

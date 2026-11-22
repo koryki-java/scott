@@ -1,0 +1,4 @@
+// Ossie b20: HAVING on a measure of the one side.
+FIND emp e, e VIA same_department dept d
+FILTER agg(d.dept_count) > 1
+FETCH e.job ASC, agg(d.dept_count) deptcount

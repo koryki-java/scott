@@ -1,0 +1,3 @@
+// Ossie b05: a self join, the manager is counted once.
+FIND emp e, e VIA same_manager emp m
+FETCH e.job ASC, agg(e.emp_count) empcount, agg(m.emp_count) managers, agg(m.sum_sal) managerssal

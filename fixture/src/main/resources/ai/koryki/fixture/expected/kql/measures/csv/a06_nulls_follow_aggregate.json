@@ -1,0 +1,5 @@
+deptno : INTEGER
+empcount : INTEGER
+commcount : INTEGER
+sumcomm : DECIMAL
+avgcomm : FLOAT

@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 description = 'The SCOTT sample database (dept, emp, salgrade) for DuckDB, as loaded by the Apache Ossie query compliance cases.'
@@ -49,3 +50,15 @@ tasks.register('updateDatabase') {
 
 tasks.named('processResources') { mustRunAfter 'updateDatabase' }
 tasks.named('test') { mustRunAfter 'updateDatabase' }
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId = 'koryki-scott-duckdb'
+            pom {
+                name = 'koryki-scott-duckdb'
+            }
+        }
+    }
+}

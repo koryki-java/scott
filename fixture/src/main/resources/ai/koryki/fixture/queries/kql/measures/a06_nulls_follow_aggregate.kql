@@ -1,0 +1,3 @@
+// Ossie a06: NULLs follow the aggregate (a department without commissions has a NULL sum).
+FIND emp e
+FETCH e.deptno ASC, agg(e.emp_count) empcount, agg(e.comm_count) commcount, agg(e.sum_comm) sumcomm, agg(e.avg_comm) avgcomm

@@ -1,0 +1,3 @@
+// Ossie b01: a many-to-one join does not repeat the measure.
+FIND emp e, e VIA same_department dept d
+FETCH d.dname ASC, agg(e.sum_sal) sumsal, agg(e.emp_count) empcount

@@ -1,0 +1,6 @@
+"job", "deptcount", "empcount"
+"ANALYST", "1", "2"
+"CLERK", "3", "4"
+"MANAGER", "3", "3"
+"PRESIDENT", "1", "1"
+"SALESMAN", "1", "4"

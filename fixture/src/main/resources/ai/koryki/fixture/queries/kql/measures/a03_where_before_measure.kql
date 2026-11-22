@@ -1,0 +1,4 @@
+// Ossie a03: a row filter applies before the measure.
+FIND emp e
+FILTER e.job <> 'CLERK'
+FETCH e.deptno ASC, agg(e.sum_sal) sumsal, agg(e.emp_count) empcount

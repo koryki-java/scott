@@ -1,0 +1,3 @@
+job : TEXT
+deptcount : INTEGER
+empcount : INTEGER

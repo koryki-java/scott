@@ -1,0 +1,8 @@
+WITH
+aggd1 AS (
+ FIND emp e, e VIA same_department dept d
+ FETCH DISTINCT d.deptno i1, e.job k1),
+aggm1 AS (FIND aggd1 x FETCH x.k1 k1, count() v1)
+FIND aggm1 t
+ FILTER max(t.v1) > 1
+ FETCH t.k1 job ASC, max(t.v1) deptcount

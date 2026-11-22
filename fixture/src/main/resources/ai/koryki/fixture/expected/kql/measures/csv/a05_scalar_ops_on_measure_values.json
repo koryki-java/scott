@@ -1,0 +1,4 @@
+deptno : INTEGER
+salperemp : FLOAT
+avgsal : FLOAT
+totalpay : DECIMAL

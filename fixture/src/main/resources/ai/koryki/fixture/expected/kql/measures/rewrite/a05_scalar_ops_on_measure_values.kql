@@ -1,0 +1,7 @@
+WITH
+aggd1 AS (
+ FIND emp e
+ FETCH DISTINCT e.empno i1, e.deptno k1, e.sal c1, e.comm c2),
+aggm1 AS (FIND aggd1 x FETCH x.k1 k1, sum(x.c1) v1, count() v2, avg(to_double(x.c1)) v3, sum(x.c2) v4)
+FIND aggm1 t
+ FETCH t.k1 deptno ASC, to_double(max(t.v1)) / max(t.v2) salperemp, max(t.v3) avgsal, max(t.v1) + coalesce(max(t.v4), 0) totalpay

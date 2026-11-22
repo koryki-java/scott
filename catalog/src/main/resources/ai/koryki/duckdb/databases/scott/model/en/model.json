@@ -1,0 +1,139 @@
+{
+  "description": "The SCOTT sample schema (dept, emp, salgrade) as loaded by the query compliance cases of Apache Ossie. Values are those of the SCOTT tables in Apache Calcite.",
+  "entities": [
+    {
+      "attributes": [
+        {
+          "column": "deptno",
+          "comment": "Primary key of the department.",
+          "label": "Department Number",
+          "name": "deptno"
+        },
+        {
+          "column": "dname",
+          "comment": "Name of the department.",
+          "label": "Department Name",
+          "name": "dname"
+        },
+        {
+          "column": "loc",
+          "comment": "City where the department is.",
+          "label": "Location",
+          "name": "loc"
+        }
+      ],
+      "comment": "A department.",
+      "description": "Department of the company; the four rows of the SCOTT sample.",
+      "label": "dept",
+      "name": "dept",
+      "table": "dept"
+    },
+    {
+      "attributes": [
+        {
+          "column": "empno",
+          "comment": "Primary key of the employee.",
+          "label": "Employee Number",
+          "name": "empno"
+        },
+        {
+          "column": "ename",
+          "comment": "Name of the employee.",
+          "label": "Employee Name",
+          "name": "ename"
+        },
+        {
+          "column": "job",
+          "comment": "Job title.",
+          "label": "Job",
+          "name": "job"
+        },
+        {
+          "column": "mgr",
+          "comment": "Employee number of the manager; blank for the president.",
+          "label": "Manager",
+          "name": "mgr"
+        },
+        {
+          "column": "hiredate",
+          "comment": "Day the employee was hired.",
+          "label": "Hire Date",
+          "name": "hiredate"
+        },
+        {
+          "column": "sal",
+          "comment": "Monthly salary.",
+          "label": "Salary",
+          "name": "sal"
+        },
+        {
+          "column": "comm",
+          "comment": "Commission; blank for employees who get none, zero is a commission of zero.",
+          "label": "Commission",
+          "name": "comm"
+        },
+        {
+          "column": "deptno",
+          "comment": "Department of the employee.",
+          "label": "Department Number",
+          "name": "deptno"
+        }
+      ],
+      "comment": "An employee.",
+      "description": "Employee of the company, with manager and department.",
+      "label": "emp",
+      "name": "emp",
+      "table": "emp"
+    },
+    {
+      "attributes": [
+        {
+          "column": "grade",
+          "comment": "Primary key of the salary grade.",
+          "label": "Grade",
+          "name": "grade"
+        },
+        {
+          "column": "losal",
+          "comment": "Lowest salary of the grade.",
+          "label": "Low Salary",
+          "name": "losal"
+        },
+        {
+          "column": "hisal",
+          "comment": "Highest salary of the grade.",
+          "label": "High Salary",
+          "name": "hisal"
+        }
+      ],
+      "comment": "A salary grade.",
+      "description": "Salary range of a grade. It is joined to emp by a range (sal between losal and hisal), not by a key, so it has no relation.",
+      "label": "salgrade",
+      "name": "salgrade",
+      "table": "salgrade"
+    }
+  ],
+  "label": "scott",
+  "name": "scott",
+  "notions": {},
+  "links": [
+    {
+      "comment": "Department of the employee.",
+      "description": "Joins emp to dept.",
+      "label": "department",
+      "name": "same_department",
+      "relations": [
+        "fk_emp_dept"
+      ]
+    },
+    {
+      "comment": "Manager of the employee.",
+      "description": "Joins emp to emp: the employee and the manager are two aliases of emp.",
+      "label": "manager",
+      "name": "same_manager",
+      "relations": [
+        "fk_emp_mgr"
+      ]
+    }
+  ]
+}

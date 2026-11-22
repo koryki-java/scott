@@ -1,0 +1,4 @@
+job : TEXT
+empcount : INTEGER
+managers : INTEGER
+managerssal : DECIMAL

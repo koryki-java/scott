@@ -1,0 +1,3 @@
+empcount : emp.emp_count
+managers : emp.emp_count
+managerssal : emp.sum_sal

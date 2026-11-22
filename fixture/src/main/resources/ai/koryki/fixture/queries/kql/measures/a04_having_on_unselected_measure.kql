@@ -1,0 +1,5 @@
+// Ossie a04: HAVING on a measure that is not fetched, sort and limit on another.
+FIND emp e
+FILTER agg(e.emp_count) > 2
+FETCH e.job, agg(e.sum_sal) sumsal DESC
+LIMIT 3

@@ -1,0 +1,4 @@
+// Ossie b18: a filter on emp restricts the departments that are counted.
+FIND emp e, e VIA same_department dept d
+FILTER e.sal > 1000
+FETCH e.job ASC, agg(d.dept_count) deptcount, agg(e.emp_count) empcount

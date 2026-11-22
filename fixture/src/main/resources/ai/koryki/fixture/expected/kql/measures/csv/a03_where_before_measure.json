@@ -1,0 +1,3 @@
+deptno : INTEGER
+sumsal : DECIMAL
+empcount : INTEGER
