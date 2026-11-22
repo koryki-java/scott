@@ -1,1 +1,3 @@
 avgsal : emp.avg_sal
+salperemp ~ emp.sum_sal, emp.emp_count
+totalpay ~ emp.sum_sal, emp.sum_comm
