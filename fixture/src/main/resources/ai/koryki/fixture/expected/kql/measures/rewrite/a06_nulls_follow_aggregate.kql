@@ -1,7 +1,2 @@
-WITH
-aggd1 AS (
- FIND emp e
- FETCH DISTINCT e.empno i1, e.deptno k1, e.comm c1),
-aggm1 AS (FIND aggd1 x FETCH x.k1 k1, count() v1, count(x.c1) v2, sum(x.c1) v3, avg(to_double(x.c1)) v4)
-FIND aggm1 t
- FETCH t.k1 deptno ASC, max(t.v1) empcount, max(t.v2) commcount, max(t.v3) sumcomm, max(t.v4) avgcomm
+FIND emp e
+ FETCH e.deptno deptno ASC, count() empcount, count(e.comm) commcount, sum(e.comm) sumcomm, avg(to_double(e.comm)) avgcomm

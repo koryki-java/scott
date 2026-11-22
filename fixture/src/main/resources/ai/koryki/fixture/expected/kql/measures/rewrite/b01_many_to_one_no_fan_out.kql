@@ -1,7 +1,2 @@
-WITH
-aggd1 AS (
- FIND emp e, e VIA same_department dept d
- FETCH DISTINCT e.empno i1, d.dname k1, e.sal c1),
-aggm1 AS (FIND aggd1 x FETCH x.k1 k1, sum(x.c1) v1, count() v2)
-FIND aggm1 t
- FETCH t.k1 dname ASC, max(t.v1) sumsal, max(t.v2) empcount
+FIND emp e, e VIA same_department dept d
+ FETCH d.dname dname ASC, sum(e.sal) sumsal, count() empcount

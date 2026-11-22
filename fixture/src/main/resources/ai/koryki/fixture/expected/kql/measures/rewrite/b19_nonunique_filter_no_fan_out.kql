@@ -1,8 +1,3 @@
-WITH
-aggd1 AS (
- FIND emp e
+FIND emp e
  FILTER EXISTS (e VIA same_department dept x, x [deptno = deptno] emp s FILTER s.job = 'SALESMAN')
- FETCH DISTINCT e.empno i1, e.job k1, e.sal c1),
-aggm1 AS (FIND aggd1 x FETCH x.k1 k1, sum(x.c1) v1)
-FIND aggm1 t
- FETCH t.k1 job ASC, max(t.v1) sumsal
+ FETCH e.job job ASC, sum(e.sal) sumsal

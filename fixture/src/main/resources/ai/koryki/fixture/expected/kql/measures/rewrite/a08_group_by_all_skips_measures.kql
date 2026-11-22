@@ -1,7 +1,2 @@
-WITH
-aggd1 AS (
- FIND emp e
- FETCH DISTINCT e.empno i1, year(e.hiredate) k1, e.sal c1),
-aggm1 AS (FIND aggd1 x FETCH x.k1 k1, count() v1, sum(x.c1) v2)
-FIND aggm1 t
- FETCH t.k1 hireyear ASC, max(t.v1) empcount, max(t.v2) sumsal
+FIND emp e
+ FETCH year(e.hiredate) hireyear ASC, count() empcount, sum(e.sal) sumsal

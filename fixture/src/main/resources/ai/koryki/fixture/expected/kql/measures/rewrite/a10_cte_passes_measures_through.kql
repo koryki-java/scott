@@ -1,8 +1,3 @@
-WITH
-aggd1 AS (
- FIND emp e
+FIND emp e
  FILTER e.job IN ('CLERK', 'SALESMAN')
- FETCH DISTINCT e.empno i1, e.deptno k1, e.sal c1),
-aggm1 AS (FIND aggd1 x FETCH x.k1 k1, sum(x.c1) v1, count() v2)
-FIND aggm1 t
- FETCH t.k1 deptno ASC, max(t.v1) payroll, max(t.v2) headcount
+ FETCH e.deptno deptno ASC, sum(e.sal) payroll, count() headcount
