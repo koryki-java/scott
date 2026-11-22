@@ -1,0 +1,3 @@
+// Ossie b10: a LEFT JOIN, the NULL-padded row of KING adds nothing to a measure of m.
+FIND emp e, e VIA same_manager + emp m
+FETCH agg(e.emp_count) ecount, agg(e.sum_sal) esal, agg(m.emp_count) mcount, agg(m.sum_sal) msal

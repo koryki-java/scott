@@ -1,0 +1,3 @@
+// Ossie b17: a group with an empty input set: count 0, NULL sum and average.
+FIND dept d, d VIA same_department + emp e
+FETCH d.dname ASC, agg(e.emp_count) empcount, agg(e.sum_sal) sumsal, agg(e.avg_sal) avgsal

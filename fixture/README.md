@@ -25,21 +25,20 @@ apache/ossie (`-Dossie.root=...`, evaluated on DuckDB) and writes `build/ossie-s
 
 ## Status against Ossie's suite
 
-19 of its 32 cases are translated, and the rows of all 19 equal Ossie's `expected.sql` (numbers compared at two
+23 of its 32 cases are translated, and the rows of all 23 equal Ossie's `expected.sql` (numbers compared at two
 decimals, the precision of the CSV golden; rows as a multiset, the ORDER BY is in the SQL golden).
 
 | Case | Result |
 |---|---|
 | a01-a08, a10 | equal. a08 groups by `year(hiredate)`. a10 is the CTE's `WHERE` as a `FILTER`: what a CTE passing measures through means is not tested |
 | b01, b02, b04, b05, b08, b09, b14, b18, b20 | equal (inner joins, self joins, one side counted once, ratio, HAVING) |
+| b10, b11, b15, b17 | equal: LEFT JOINs with the NULL-padded rows adding nothing, a RIGHT JOIN as a LEFT JOIN with the sides swapped (`m [empno = mgr] + emp e`), an empty group with 0 and NULLs |
 | b19 | equal, as a semi join: `EXISTS (e VIA same_department dept x, x [deptno = deptno] emp s FILTER ...)` |
 
-### The 13 that are open, and why
+### The 9 that are open, and why
 
 | Case | What it needs | Where the gap is |
 |---|---|---|
-| b10, b15, b17 (LEFT JOIN) | an outer link `+` in the query; the layer of a measure must drop NULL-padded rows (its identity is NULL), or `count()` counts them | the rewriter refuses `+` today |
-| b11 (RIGHT JOIN) | the same, with the sides swapped (`FIND emp m, m + emp e`), KQL has no RIGHT | the rewriter |
 | b16 (ON filter of a LEFT JOIN) | a filter in the ON clause of an optional link; a `FILTER` is a WHERE and would drop the padded row | KQL (no known way to say it), then the rewriter |
 | b12 (FULL JOIN), b13 (CROSS JOIN) | KQL has no FULL or CROSS join; two sources without a link get an inferred join | KQL, not the rewriter |
 | b06, b07 (range join) | `e.sal BETWEEN s.losal AND s.hisal`: a link is an equality of columns, so `salgrade` cannot be joined | KQL / the catalog |

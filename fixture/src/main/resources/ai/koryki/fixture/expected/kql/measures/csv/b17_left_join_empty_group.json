@@ -1,0 +1,4 @@
+dname : TEXT
+empcount : INTEGER
+sumsal : DECIMAL
+avgsal : FLOAT

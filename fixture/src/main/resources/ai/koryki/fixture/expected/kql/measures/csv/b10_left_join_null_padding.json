@@ -1,0 +1,4 @@
+ecount : INTEGER
+esal : DECIMAL
+mcount : INTEGER
+msal : DECIMAL

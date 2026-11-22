@@ -1,0 +1,7 @@
+WITH
+aggd1 AS (
+ FIND dept d, d VIA same_department + emp e
+ FETCH DISTINCT e.empno i1, d.dname k1, e.sal c1),
+aggm1 AS (FIND aggd1 x FETCH x.k1 k1, count(x.i1) v1, sum(x.c1) v2, avg(to_double(x.c1)) v3)
+FIND aggm1 t
+ FETCH t.k1 dname ASC, max(t.v1) empcount, max(t.v2) sumsal, max(t.v3) avgsal

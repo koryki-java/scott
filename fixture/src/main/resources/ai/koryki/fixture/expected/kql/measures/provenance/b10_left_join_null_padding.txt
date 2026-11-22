@@ -1,0 +1,4 @@
+ecount : emp.emp_count
+esal : emp.sum_sal
+mcount : emp.emp_count
+msal : emp.sum_sal

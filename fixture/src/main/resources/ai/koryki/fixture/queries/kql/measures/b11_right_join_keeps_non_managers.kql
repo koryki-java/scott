@@ -1,0 +1,3 @@
+// Ossie b11: a RIGHT JOIN, written as a LEFT JOIN with the sides swapped: all employees as managers m, and their reports e.
+FIND emp m, m [empno = mgr] + emp e
+FETCH agg(e.emp_count) ecount, agg(e.sum_sal) esal, agg(m.emp_count) mcount, agg(m.sum_sal) msal
