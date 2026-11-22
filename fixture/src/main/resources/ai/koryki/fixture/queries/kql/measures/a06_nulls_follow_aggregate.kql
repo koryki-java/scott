@@ -1,3 +1,14 @@
-// Ossie a06: NULLs follow the aggregate (a department without commissions has a NULL sum).
+// ----------------------------------------------------------------------------
+// A6. A measure follows the NULL rules of its aggregate.
+// Question: For each department, how many employees are there, how many of
+//   them have a commission, and what are the total and the average
+//   commission?
+// emp_count is COUNT(*) and counts every row. comm_count is COUNT(comm) and
+// ignores NULL values. Departments 10 and 20 have no commission values, so
+// sum_comm and avg_comm are NULL. In department 30, the commission of TURNER
+// is 0.00, which is a value, so avg_comm is 2200 / 4.
+// Spec: 8.1
+// ----------------------------------------------------------------------------
+// KQL: NULLs follow the aggregate (a department without commissions has a NULL sum).
 FIND emp e
 FETCH e.deptno ASC, agg(e.emp_count) empcount, agg(e.comm_count) commcount, agg(e.sum_comm) sumcomm, agg(e.avg_comm) avgcomm

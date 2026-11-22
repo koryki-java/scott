@@ -1,3 +1,13 @@
-// Ossie b17: a group with an empty input set: count 0, NULL sum and average.
+// ----------------------------------------------------------------------------
+// B17. LEFT JOIN, grouped: a group with an empty input set.
+// Question: For each department, including a department with no employees,
+//   what are the headcount, the payroll, and the average salary?
+// The B15 query, grouped by department. The OPERATIONS group stays in the
+// result. Its joined row is NULL-padded on the emp side, so the emp measures
+// take their empty-input values: 0 for COUNT, NULL for SUM and AVG. The INNER
+// join of B1 omits OPERATIONS.
+// Spec: 7.6, 8.1, A.6
+// ----------------------------------------------------------------------------
+// KQL: a group with an empty input set: count 0, NULL sum and average.
 FIND dept d, d VIA same_department + emp e
 FETCH d.dname ASC, agg(e.emp_count) empcount, agg(e.sum_sal) sumsal, agg(e.avg_sal) avgsal

@@ -1,3 +1,18 @@
-// Ossie b11: a RIGHT JOIN, written as a LEFT JOIN with the sides swapped: all employees as managers m, and their reports e.
+// ----------------------------------------------------------------------------
+// B11. RIGHT JOIN: the employees that manage nobody stay on the m side.
+// Question: Over all employees as managers and the employees that report to
+//   them, how many employees are on each side, and what do they earn?
+// B9 to B13 run one self-join query with each join type. e is the employee
+// and m is the manager, joined on e.mgr = m.empno. KING has no manager, and 8
+// employees manage nobody. The join type decides which rows reach each
+// measure. No join type makes a measure count a row twice, and NULL-padded
+// rows add nothing.
+//
+// RIGHT gives 21 joined rows. The 8 employees that manage nobody are kept on
+// the m side. Their rows are NULL-padded on the e side, so the e measures are
+// the same as for INNER (B9).
+// Spec: 7.6, 8.1, G2 (8.3), A.6
+// ----------------------------------------------------------------------------
+// KQL: a RIGHT JOIN, written as a LEFT JOIN with the sides swapped: all employees as managers m, and their reports e.
 FIND emp m, m [empno = mgr] + emp e
 FETCH agg(e.emp_count) ecount, agg(e.sum_sal) esal, agg(m.emp_count) mcount, agg(m.sum_sal) msal

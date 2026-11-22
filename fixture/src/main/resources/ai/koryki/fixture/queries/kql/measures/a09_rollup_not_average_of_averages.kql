@@ -1,3 +1,12 @@
-// Ossie a09: ROLLUP evaluates a measure again for each grouping set: the total row is the average over all employees, not the average of the department averages.
+// ----------------------------------------------------------------------------
+// A9. ROLLUP evaluates a measure again for each grouping set.
+// Question: What is the average salary of each department, and of the whole
+//   company?
+// On the total row, AGG(avg_sal) is the average over all 14 employees
+// (2073.21). It is not the average of the three department averages
+// (2219.44).
+// Spec: 7.4, G1 (8.2)
+// ----------------------------------------------------------------------------
+// KQL: ROLLUP evaluates a measure again for each grouping set: the total row is the average over all employees, not the average of the department averages.
 FIND emp e
 FETCH e.deptno ASC, agg(e.emp_count) empcount, agg(e.avg_sal) avgsal ROLLUP

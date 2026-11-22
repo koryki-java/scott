@@ -1,4 +1,11 @@
-// Ossie a03: a row filter applies before the measure.
+// ----------------------------------------------------------------------------
+// A3. WHERE removes rows before a measure is evaluated.
+// Question: Without the clerks, what are the payroll and the headcount of
+//   each department?
+// Each measure sees only the rows that remain after WHERE.
+// Spec: 7.3, G1 (8.2)
+// ----------------------------------------------------------------------------
+// KQL: a row filter applies before the measure.
 FIND emp e
 FILTER e.job <> 'CLERK'
 FETCH e.deptno ASC, agg(e.sum_sal) sumsal, agg(e.emp_count) empcount

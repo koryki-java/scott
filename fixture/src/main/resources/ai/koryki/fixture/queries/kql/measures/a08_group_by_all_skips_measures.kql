@@ -1,3 +1,11 @@
-// Ossie a08: the group key is an expression on a field.
+// ----------------------------------------------------------------------------
+// A8. GROUP BY ALL does not group by measures.
+// Question: How many employees were hired in each year, and what is their
+//   total salary?
+// A measure is not a grouping column. GROUP BY ALL groups by the other
+// expressions of the SELECT list: here, an expression on a field.
+// Spec: 7.4
+// ----------------------------------------------------------------------------
+// KQL: the group key is an expression on a field.
 FIND emp e
 FETCH year(e.hiredate) hireyear ASC, agg(e.emp_count) empcount, agg(e.sum_sal) sumsal

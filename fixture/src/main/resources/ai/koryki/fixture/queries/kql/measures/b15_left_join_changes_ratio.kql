@@ -1,3 +1,20 @@
-// Ossie b15: a LEFT JOIN keeps the empty department, so the payroll is divided by 4 departments.
+// ----------------------------------------------------------------------------
+// B15. A LEFT JOIN keeps an empty department, and the ratio changes.
+// Question: What is the payroll per department, over all departments?
+// B14 to B16 run one dept-emp query with different joins. The query divides
+// the payroll by the number of departments: a ratio of two measures from
+// different relations. The join repeats each dept row once for each employee
+// in the department, but dept_count still counts each department once. The
+// CAST makes the division approximate (README, "Result semantics").
+//
+// OPERATIONS has no employees. The LEFT join keeps it, so the payroll is
+// divided by 4 departments and not by 3 (B14). The join type is the choice of
+// the tool, and it changes the answer (Sections 10.2 and A.6). A plain
+// COUNT(d.deptno) over the joined rows gives 15, not 4. A RIGHT join with the
+// sides swapped, or a FULL join, gives the same result, because every
+// employee has a department.
+// Spec: 7.2, 7.6, 8.1, 10.2, A.6
+// ----------------------------------------------------------------------------
+// KQL: a LEFT JOIN keeps the empty department, so the payroll is divided by 4 departments.
 FIND dept d, d VIA same_department + emp e
 FETCH agg(d.dept_count) deptcount, agg(e.emp_count) empcount, agg(e.sum_sal) sumsal, to_double(agg(e.sum_sal)) / agg(d.dept_count) salperdept

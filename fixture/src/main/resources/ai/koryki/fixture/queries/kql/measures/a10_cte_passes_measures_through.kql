@@ -1,4 +1,13 @@
-// Ossie a10: the CTE of the case only restricts the rows, so its WHERE is the FILTER here. The pass-through of measures by a CTE is not tested.
+// ----------------------------------------------------------------------------
+// A10. A CTE passes measures through and restricts their rows.
+// Question: Counting only clerks and salesmen, what are the payroll and the
+//   headcount of each department?
+// The CTE passes the measures through without evaluating them. A rename does
+// not change a measure. The WHERE clause of the CTE restricts the rows that
+// the outer AGG() calls see.
+// Spec: 7.1, 7.7, 8.1
+// ----------------------------------------------------------------------------
+// KQL: the CTE of the case only restricts the rows, so its WHERE is the FILTER here. The pass-through of measures by a CTE is not tested.
 FIND emp e
 FILTER e.job IN ('CLERK', 'SALESMAN')
 FETCH e.deptno ASC, agg(e.sum_sal) payroll, agg(e.emp_count) headcount

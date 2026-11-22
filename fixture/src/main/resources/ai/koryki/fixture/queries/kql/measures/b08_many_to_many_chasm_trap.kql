@@ -1,3 +1,14 @@
-// Ossie b08: colleagues of the same department, a many-to-many join through dept.
+// ----------------------------------------------------------------------------
+// B8. A many-to-many join repeats rows on both sides (chasm trap).
+// Question: For each department, what is the payroll, and how many colleagues
+//   are there, when each employee is joined to every colleague in the
+//   department?
+// Each employee is joined to every colleague in the same department, which
+// gives 3 x 3, 5 x 5, and 6 x 6 joined rows. Both sides repeat. Each measure
+// still counts each of its source rows once. A plain SUM(e.sal) gives 26250,
+// 54375, 56400, and a plain COUNT(*) gives 9, 25, 36.
+// Spec: 7.6, G2 (8.3)
+// ----------------------------------------------------------------------------
+// KQL: colleagues of the same department, a many-to-many join through dept.
 FIND emp e, e VIA same_department dept d, d VIA same_department emp c
 FETCH e.deptno ASC, agg(e.sum_sal) sumsal, agg(c.emp_count) colleagues

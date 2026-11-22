@@ -1,4 +1,15 @@
-// Ossie b20: HAVING on a measure of the one side.
+// ----------------------------------------------------------------------------
+// B20. HAVING on a "one"-side measure that the join fans out.
+// Question: Which jobs exist in more than one department, and in how many?
+// AGG(d.dept_count) may appear in HAVING, as any aggregate may (Section 7.5).
+// The join repeats each dept row once for each employee, and the measure
+// counts each department once, so HAVING keeps the jobs that span more than
+// one department: CLERK and MANAGER. A plain COUNT(*) > 1 in HAVING would use
+// the joined-row count and also keep ANALYST (2) and SALESMAN (4), whose
+// employees are all in one department.
+// Spec: 7.5, 7.6, G2 (8.3)
+// ----------------------------------------------------------------------------
+// KQL: HAVING on a measure of the one side.
 FIND emp e, e VIA same_department dept d
 FILTER agg(d.dept_count) > 1
 FETCH e.job ASC, agg(d.dept_count) deptcount

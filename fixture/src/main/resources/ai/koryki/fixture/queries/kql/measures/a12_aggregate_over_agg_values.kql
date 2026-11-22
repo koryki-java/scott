@@ -1,4 +1,15 @@
-// Ossie a12: an ordinary aggregate over agg() values, and a set operation: the department payrolls are a block, the second branch reads a measure directly.
+// ----------------------------------------------------------------------------
+// A12. An ordinary aggregate over AGG() values (two-stage aggregation).
+// Question: What is the average payroll of a department, and what is the
+//   average salary of an employee?
+// The first branch averages the payroll of the three departments (29025 / 3).
+// The second branch is the average salary of an employee. After AGG()
+// evaluates the measures, the values are ordinary scalars, so the outer AVG
+// and UNION ALL are valid. The outer AVG casts its argument, so its result is
+// approximate (README, "Result semantics").
+// Spec: A.3, 7.8
+// ----------------------------------------------------------------------------
+// KQL: an ordinary aggregate over agg() values, and a set operation: the department payrolls are a block, the second branch reads a measure directly.
 WITH d AS (FIND emp e FETCH e.deptno k, agg(e.sum_sal) deptsal)
 FIND d x FETCH 'avg payroll per dept' metric, avg(to_double(x.deptsal)) amount
 UNIONALL

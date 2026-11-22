@@ -1,4 +1,12 @@
-// Ossie a11: agg() in a scalar sub-query of the FILTER: employees above the company average, per department.
+// ----------------------------------------------------------------------------
+// A11. AGG() in a scalar subquery in WHERE.
+// Question: In each department, how many employees earn more than the company
+//   average?
+// AGG() cannot appear directly in WHERE, but a scalar subquery in WHERE can
+// use it. The company average is 2073.21.
+// Spec: 7.3
+// ----------------------------------------------------------------------------
+// KQL: agg() in a scalar sub-query of the FILTER: employees above the company average, per department.
 FIND emp e
 FILTER e.sal > (FIND emp x FETCH agg(x.avg_sal))
 FETCH e.deptno ASC, agg(e.emp_count) empcount

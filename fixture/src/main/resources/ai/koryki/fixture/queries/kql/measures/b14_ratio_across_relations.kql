@@ -1,3 +1,16 @@
-// Ossie b14: a ratio of measures of two tables.
+// ----------------------------------------------------------------------------
+// B14. A ratio of measures from two relations.
+// Question: What is the payroll per department, over the departments that
+//   have employees?
+// B14 to B16 run one dept-emp query with different joins. The query divides
+// the payroll by the number of departments: a ratio of two measures from
+// different relations. The join repeats each dept row once for each employee
+// in the department, but dept_count still counts each department once. The
+// CAST makes the division approximate (README, "Result semantics").
+//
+// A plain COUNT(d.deptno) over the joined rows gives 14, not 3.
+// Spec: 7.2, 7.6, 8.1, A.6
+// ----------------------------------------------------------------------------
+// KQL: a ratio of measures of two tables.
 FIND dept d, d VIA same_department emp e
 FETCH agg(d.dept_count) deptcount, agg(e.emp_count) empcount, agg(e.sum_sal) sumsal, to_double(agg(e.sum_sal)) / agg(d.dept_count) salperdept

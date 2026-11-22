@@ -1,3 +1,9 @@
-// Ossie a02: measures per group.
+// ----------------------------------------------------------------------------
+// A2. A measure is evaluated for each group.
+// Question: What are the payroll and the headcount of each department?
+// The grouping sets the level at which each measure is reported.
+// Spec: 7.4, G1 (8.2)
+// ----------------------------------------------------------------------------
+// KQL: measures per group.
 FIND emp e
 FETCH e.deptno ASC, agg(e.sum_sal) sumsal, agg(e.emp_count) empcount

@@ -1,4 +1,14 @@
-// Ossie a04: HAVING on a measure that is not fetched, sort and limit on another.
+// ----------------------------------------------------------------------------
+// A4. HAVING and ORDER BY can use a measure that is not selected.
+// Question: Of the jobs that more than two employees have, which three have
+//   the largest payroll?
+// AGG() can appear in HAVING and ORDER BY, as any aggregate can. HAVING can
+// use a measure that the SELECT list does not contain. HAVING removes ANALYST
+// (6000, 2 employees) and PRESIDENT (5000, 1 employee), so CLERK (4150) is in
+// the top three.
+// Spec: 7.5
+// ----------------------------------------------------------------------------
+// KQL: HAVING on a measure that is not fetched, sort and limit on another.
 FIND emp e
 FILTER agg(e.emp_count) > 2
 FETCH e.job, agg(e.sum_sal) sumsal DESC

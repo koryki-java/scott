@@ -1,4 +1,15 @@
-// Ossie b03: the two departments with the largest payroll, as a block with sort and limit; the main query keeps the employees of those departments.
+// ----------------------------------------------------------------------------
+// B3. A join to a top-N subquery acts as a filter.
+// Question: In the two departments with the largest payroll, what is the
+//   payroll of each job?
+// The subquery selects the two departments with the largest payroll (20 and
+// 30). The join to the subquery acts as a filter on emp, and the outer query
+// reports the payroll of each job in those departments. The departments that
+// the subquery ranks are the same values that the join matches (closure,
+// Section 8.4).
+// Spec: 7.6, 8.4, A.2
+// ----------------------------------------------------------------------------
+// KQL: the two departments with the largest payroll, as a block with sort and limit; the main query keeps the employees of those departments.
 WITH top AS (FIND emp x FETCH x.deptno d, agg(x.sum_sal) s DESC LIMIT 2)
 FIND emp e
 FILTER e.deptno IN (FIND top t FETCH t.d)

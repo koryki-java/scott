@@ -1,4 +1,16 @@
-// Ossie b18: a filter on emp restricts the departments that are counted.
+// ----------------------------------------------------------------------------
+// B18. WHERE restricts a "one"-side measure that the join fans out.
+// Question: Among the employees who earn more than 1000, how many
+//   departments have each job, and how many such employees are there?
+// The join repeats each dept row once for each employee in the department,
+// and WHERE removes rows before the measures are evaluated. AGG(d.dept_count)
+// counts each surviving department once in each group. Removing the two
+// lowest-paid clerks (SMITH and JAMES) drops CLERK from three departments to
+// two. A plain COUNT(*) over the joined rows gives 2, 2, 3, 1, 4.
+// AGG(e.emp_count) gives the same values, because the join repeats no emp row.
+// Spec: 7.3, 7.6, G1 (8.2), G2 (8.3)
+// ----------------------------------------------------------------------------
+// KQL: a filter on emp restricts the departments that are counted.
 FIND emp e, e VIA same_department dept d
 FILTER e.sal > 1000
 FETCH e.job ASC, agg(d.dept_count) deptcount, agg(e.emp_count) empcount

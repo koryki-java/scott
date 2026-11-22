@@ -1,3 +1,15 @@
-// Ossie a05: scalar operations on measure values.
+// ----------------------------------------------------------------------------
+// A5. Scalar operators apply to the values of AGG().
+// Question: For each department, what is the salary per employee, computed in
+//   two ways, and what is the total of salaries and commissions?
+// Each AGG() gives one scalar value for each group. Scalar operators and
+// functions then apply to these values. The ratio of two measures, sum_sal /
+// emp_count, is equal to avg_sal. The CAST makes the division approximate:
+// the scale of a division of two exact numerics is implementation-defined
+// (README, "Result semantics"). COALESCE replaces the NULL commission total
+// of departments 10 and 20.
+// Spec: 7.2, 8.1
+// ----------------------------------------------------------------------------
+// KQL: scalar operations on measure values.
 FIND emp e
 FETCH e.deptno ASC, to_double(agg(e.sum_sal)) / agg(e.emp_count) salperemp, agg(e.avg_sal) avgsal, agg(e.sum_sal) + coalesce(agg(e.sum_comm), 0) totalpay

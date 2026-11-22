@@ -1,4 +1,12 @@
-// Ossie b02: a filter on the joined table.
+// ----------------------------------------------------------------------------
+// B2. A filter on the joined relation restricts the measure.
+// Question: For the employees in New York, what are the payroll and the
+//   headcount of each job?
+// A filter on dept removes emp rows from the input set, as a filter on emp
+// does. Only the employees in NEW YORK remain.
+// Spec: 7.6, G1 (8.2)
+// ----------------------------------------------------------------------------
+// KQL: a filter on the joined table.
 FIND emp e, e VIA same_department dept d
 FILTER d.loc = 'NEW YORK'
 FETCH e.job ASC, agg(e.sum_sal) sumsal, agg(e.emp_count) empcount

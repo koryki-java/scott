@@ -1,3 +1,14 @@
-// Ossie b04: the one side of the join is counted once per department, not once per employee.
+// ----------------------------------------------------------------------------
+// B4. Fan-out: a measure of the "one" side counts each of its rows once.
+// Question: For each job, how many departments have it, and how many
+//   employees have it?
+// The join repeats each dept row once for each employee in the department.
+// AGG(d.dept_count) counts each department once in each group, so the result
+// is the number of departments that have the job. A plain COUNT(*) over the
+// joined rows gives 2, 4, 3, 1, 4. AGG(e.emp_count) gives the same values,
+// because the join repeats no emp row.
+// Spec: 7.6, G2 (8.3)
+// ----------------------------------------------------------------------------
+// KQL: the one side of the join is counted once per department, not once per employee.
 FIND emp e, e VIA same_department dept d
 FETCH e.job ASC, agg(d.dept_count) deptcount, agg(e.emp_count) empcount

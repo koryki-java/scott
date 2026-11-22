@@ -1,3 +1,16 @@
-// Ossie b05: a self join, the manager is counted once.
+// ----------------------------------------------------------------------------
+// B5. Fan-out in a self-join: each manager is counted once.
+// Question: For each job, how many employees have a manager, how many
+//   managers do they report to, and what is the total salary of those
+//   managers?
+// e is the employee and m is the manager. The join repeats each manager row
+// once for each report. AGG(m.sum_sal) counts the salary of each manager once
+// in each group. The 4 salesmen all report to BLAKE, so the result is 2850,
+// and a plain SUM(m.sal) gives 11400. The 4 clerks report to 4 different
+// managers, so the two values are the same (11300). A plain SUM(m.sal) by job
+// gives 5950, 11300, 15000, 11400.
+// Spec: 7.6, 8.1, G2 (8.3)
+// ----------------------------------------------------------------------------
+// KQL: a self join, the manager is counted once.
 FIND emp e, e VIA same_manager emp m
 FETCH e.job ASC, agg(e.emp_count) empcount, agg(m.emp_count) managers, agg(m.sum_sal) managerssal

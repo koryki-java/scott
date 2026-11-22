@@ -1,3 +1,18 @@
-// Ossie b10: a LEFT JOIN, the NULL-padded row of KING adds nothing to a measure of m.
+// ----------------------------------------------------------------------------
+// B10. LEFT JOIN: a NULL-padded row adds nothing to a measure.
+// Question: Over all employees and their managers, how many employees are on
+//   each side, and what do they earn?
+// B9 to B13 run one self-join query with each join type. e is the employee
+// and m is the manager, joined on e.mgr = m.empno. KING has no manager, and 8
+// employees manage nobody. The join type decides which rows reach each
+// measure. No join type makes a measure count a row twice, and NULL-padded
+// rows add nothing.
+//
+// LEFT gives 14 joined rows. KING is kept on the e side. The row of KING is
+// NULL-padded on the m side, so the m measures are the same as for INNER
+// (B9).
+// Spec: 7.6, 8.1, G2 (8.3), A.6
+// ----------------------------------------------------------------------------
+// KQL: a LEFT JOIN, the NULL-padded row of KING adds nothing to a measure of m.
 FIND emp e, e VIA same_manager + emp m
 FETCH agg(e.emp_count) ecount, agg(e.sum_sal) esal, agg(m.emp_count) mcount, agg(m.sum_sal) msal

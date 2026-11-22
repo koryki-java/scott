@@ -1,3 +1,9 @@
-// Ossie a01: two measures of one table, no group key.
+// ----------------------------------------------------------------------------
+// A1. Grand total.
+// Question: What is the total salary, and how many employees are there?
+// AGG() is an aggregate. Without GROUP BY, the query returns one row.
+// Spec: 6, 7.2
+// ----------------------------------------------------------------------------
+// KQL: two measures of one table, no group key.
 FIND emp e
 FETCH agg(e.sum_sal) sumsal, agg(e.emp_count) empcount
