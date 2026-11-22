@@ -1,0 +1,11 @@
+rootProject.allprojects {
+    version = rootProject.version
+    group = rootProject.group
+    pluginManager.withPlugin('java-base') {
+        java {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(21)
+            }
+        }
+    }
+}

@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+}
+
+description = 'The SCOTT sample database (dept, emp, salgrade) for DuckDB, as loaded by the Apache Ossie query compliance cases.'
+
+// The program that builds scottdb.duckdb. A source set of its own, so the driver stays out of the jar.
+sourceSets {
+    builder
+}
+
+dependencies {
+    builderImplementation libs.duckdb
+
+    testImplementation libs.duckdb
+    testImplementation platform(libs.junit.bom)
+    testImplementation libs.junit.jupiter
+    testRuntimeOnly libs.junit.platform.launcher
+}
+
+test {
+    useJUnitPlatform()
+}
+
+def databaseDir = 'src/main/resources/ai/koryki/duckdb/databases/scott'
+def builtDatabase = layout.buildDirectory.file('scottdb.duckdb')
+
+tasks.register('buildDatabase', JavaExec) {
+    group = 'build'
+    description = 'Builds build/scottdb.duckdb from scott.sql.'
+    classpath = sourceSets.builder.runtimeClasspath
+    mainClass = 'ai.koryki.scott.duckdb.BuildDatabase'
+    outputs.file(builtDatabase)
+    args(builtDatabase.get().asFile.path)
+}
+
+tasks.register('updateDatabase') {
+    group = 'build'
+    description = 'Replaces the committed scottdb.duckdb with a fresh build.'
+    dependsOn 'buildDatabase'
+    def source = builtDatabase
+    def target = file("$databaseDir/scottdb.duckdb")
+    doLast {
+        java.nio.file.Files.copy(source.get().asFile.toPath(), target.toPath(),
+                java.nio.file.StandardCopyOption.REPLACE_EXISTING)
+        logger.lifecycle("Replaced $target")
+    }
+}
+
+tasks.named('processResources') { mustRunAfter 'updateDatabase' }
+tasks.named('test') { mustRunAfter 'updateDatabase' }
