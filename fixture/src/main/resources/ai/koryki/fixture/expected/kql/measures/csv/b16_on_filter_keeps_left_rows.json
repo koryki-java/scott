@@ -1,0 +1,4 @@
+deptcount : INTEGER
+empcount : INTEGER
+sumsal : DECIMAL
+salperdept : FLOAT

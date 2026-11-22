@@ -25,7 +25,7 @@ apache/ossie (`-Dossie.root=...`, evaluated on DuckDB) and writes `build/ossie-s
 
 ## Status against Ossie's suite
 
-27 of its 32 cases are translated, and the rows of all 27 equal Ossie's `expected.sql` (numbers compared at two
+28 of its 32 cases are translated, and the rows of all 28 equal Ossie's `expected.sql` (numbers compared at two
 decimals, the precision of the CSV golden; rows as a multiset, the ORDER BY is in the SQL golden).
 
 | Case | Result |
@@ -33,13 +33,13 @@ decimals, the precision of the CSV golden; rows as a multiset, the ORDER BY is i
 | a01-a12 | equal. a11 is `agg` in a scalar sub-query, a12 an outer aggregate over `agg` values and a `UNIONALL`, b03 a block with sort and limit used as `IN` filter. a09 is ROLLUP, one evaluation per grouping set (total row 2073.21, not the average of averages). a08 groups by `year(hiredate)`. a10 is the CTE's `WHERE` as a `FILTER`: what a CTE passing measures through means is not tested |
 | b01, b02, b04, b05, b08, b09, b14, b18, b20 | equal (inner joins, self joins, one side counted once, ratio, HAVING) |
 | b10, b11, b15, b17 | equal: LEFT JOINs with the NULL-padded rows adding nothing, a RIGHT JOIN as a LEFT JOIN with the sides swapped (`m [empno = mgr] + emp e`), an empty group with 0 and NULLs |
+| b16 | equal: a `FILTER` on an optionally linked alias is rendered in the ON clause of the LEFT JOIN by core, so the departments stay |
 | b19 | equal, as a semi join: `EXISTS (e VIA same_department dept x, x [deptno = deptno] emp s FILTER ...)` |
 
-### The 5 that are open, and why
+### The 4 that are open, and why
 
 | Case | What it needs | Where the gap is |
 |---|---|---|
-| b16 (ON filter of a LEFT JOIN) | a filter in the ON clause of an optional link; a `FILTER` is a WHERE and would drop the padded row | KQL (no known way to say it), then the rewriter |
 | b12 (FULL JOIN), b13 (CROSS JOIN) | KQL has no FULL or CROSS join; two sources without a link get an inferred join | KQL, not the rewriter |
 | b06, b07 (range join) | `e.sal BETWEEN s.losal AND s.hisal`: a link is an equality of columns, so `salgrade` cannot be joined | KQL / the catalog |
 

@@ -1,0 +1,19 @@
+// ----------------------------------------------------------------------------
+// B16. A filter in the ON clause of a LEFT JOIN keeps every left row.
+// Question: What is the payroll of the clerks per department, over all
+//   departments?
+// B14 to B16 run one dept-emp query with different joins. The query divides
+// the payroll by the number of departments: a ratio of two measures from
+// different relations. The join repeats each dept row once for each employee
+// in the department, but dept_count still counts each department once. The
+// CAST makes the division approximate (README, "Result semantics").
+//
+// The condition e.job = 'CLERK' in ON keeps every department and matches only
+// clerks. If the condition were in WHERE, the query would remove the
+// NULL-padded OPERATIONS row, and dept_count would be 3.
+// Spec: 7.2, 7.6, 8.1, A.6
+// ----------------------------------------------------------------------------
+// KQL: a FILTER on an optionally linked alias is rendered in the ON clause of the LEFT JOIN, so every department stays: the condition on e.job restricts the employees that match, not the departments.
+FIND dept d, d VIA same_department + emp e
+FILTER e.job = 'CLERK'
+FETCH agg(d.dept_count) deptcount, agg(e.emp_count) empcount, agg(e.sum_sal) sumsal, to_double(agg(e.sum_sal)) / agg(d.dept_count) salperdept
