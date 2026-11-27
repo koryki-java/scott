@@ -11,9 +11,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * Builds the SCOTT DuckDB database by running Apache Ossie's {@code scott.sql}, unchanged. The file is
- * not called scott.duckdb: DuckDB names the catalog after the file, and a catalog "scott" next to the
- * schema "scott" makes every reference ambiguous.
+ * Builds the SCOTT DuckDB database by running Apache Ossie's {@code scott.sql}, unchanged. The file
+ * is not called scott.duckdb: DuckDB names the catalog after the file, and a catalog "scott" next
+ * to the schema "scott" makes every reference ambiguous.
  */
 public final class BuildDatabase {
 
