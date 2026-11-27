@@ -19,7 +19,6 @@ test {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            from components.java
             artifactId = 'koryki-scott-catalog'
             pom {
                 name = 'koryki-scott-catalog'
