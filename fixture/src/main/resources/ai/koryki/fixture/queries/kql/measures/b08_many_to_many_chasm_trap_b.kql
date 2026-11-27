@@ -1,0 +1,16 @@
+// ----------------------------------------------------------------------------
+// B8b. Chasm trap: bonus and pet both join to emp.
+// Question: For each employee that has a bonus, what is their salary, how
+//   many bonuses do they have and what is their total, and how many pets do
+//   they have?
+// bonus and pet are each on the "many" side of a join to emp, so the join
+// repeats each of an employee's bonuses once for each of their pets, and each
+// pet once for each bonus. JONES has two bonuses and three pets, which gives 6
+// joined rows: naive SUM(e.sal) is 17850, naive COUNT(*) is 6, naive
+// SUM(b.comm) is 1500, and naive COUNT(p.pname) is 6. KING has one bonus and
+// no pet; the LEFT JOIN keeps him, with no pets.
+// Spec: 7.6, G2 (8.3)
+// ----------------------------------------------------------------------------
+// KQL: bonus and pet are both on the many side of emp; the LEFT JOIN (+) keeps KING, who has no pet.
+FIND bonus b, b VIA same_employee emp e, e VIA same_owner + pet p
+FETCH e.ename ASC, agg(e.sum_sal) sal, agg(b.bonus_count) bonuses, agg(b.sum_bonus) bonus, agg(p.pet_count) pets

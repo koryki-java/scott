@@ -1,0 +1,7 @@
+// ----------------------------------------------------------------------------
+// B12a. FULL OUTER JOIN.
+// All employees, and all pets.
+// ----------------------------------------------------------------------------
+// KQL: FULL join: all employees and all pets.
+FIND emp e, e VIA same_owner FULL pet p
+FETCH agg(e.emp_count) ecount, agg(e.sum_sal) esal, agg(p.pet_count) pcount, agg(p.sum_age) page

@@ -1,9 +1,21 @@
 {
-  "description": "The SCOTT sample schema (dept, emp, salgrade) as loaded by the query compliance cases of Apache Ossie. Values are those of the SCOTT tables in Apache Calcite.",
+  "description": "The SCOTT sample schema (dept, emp, salgrade, bonus, pet) as loaded by the query compliance cases of Apache Ossie. Values are those of the SCOTT tables in Apache Calcite, with the bonuses and pets of Ossie.",
   "label": "scott",
   "name": "scott",
   "schemaPrefix": "scott",
   "relations": [
+    {
+      "endColumns": [
+        "ename"
+      ],
+      "endTable": "emp",
+      "name": "fk_bonus_emp",
+      "startColumns": [
+        "ename"
+      ],
+      "startTable": "bonus",
+      "symmetric": true
+    },
     {
       "endColumns": [
         "deptno"
@@ -37,9 +49,77 @@
       "startColumns": [],
       "startTable": "emp",
       "symmetric": true
+    },
+    {
+      "endColumns": [
+        "empno"
+      ],
+      "endTable": "emp",
+      "name": "fk_pet_emp",
+      "startColumns": [
+        "empno"
+      ],
+      "startTable": "pet",
+      "symmetric": true
     }
   ],
   "tables": [
+    {
+      "columns": [
+        {
+          "concept": {
+            "comment": "Name of the employee who got the bonus.",
+            "dialectType": "VARCHAR",
+            "label": "Employee Name",
+            "typeFamily": "TEXT"
+          },
+          "name": "ename",
+          "namePos": 0,
+          "nullable": false,
+          "pkPos": 1
+        },
+        {
+          "concept": {
+            "comment": "Job title of the employee.",
+            "dialectType": "VARCHAR",
+            "label": "Job",
+            "typeFamily": "TEXT"
+          },
+          "name": "job",
+          "namePos": 0,
+          "nullable": false,
+          "pkPos": 2
+        },
+        {
+          "concept": {
+            "comment": "Salary of the employee.",
+            "dialectType": "DECIMAL(7,2)",
+            "label": "Salary",
+            "typeFamily": "DECIMAL"
+          },
+          "name": "sal",
+          "namePos": 0,
+          "nullable": false,
+          "pkPos": 3
+        },
+        {
+          "concept": {
+            "comment": "Amount of the bonus, in commission.",
+            "dialectType": "DECIMAL(7,2)",
+            "label": "Bonus",
+            "typeFamily": "DECIMAL"
+          },
+          "name": "comm",
+          "namePos": 0,
+          "nullable": false,
+          "pkPos": 4
+        }
+      ],
+      "comment": "A bonus of an employee.",
+      "description": "Bonus of an employee: three rows, two for JONES and one for KING. The table has no key in the database, but each row is distinct, so all four columns identify it, as the Ossie model declares.",
+      "label": "bonus",
+      "name": "bonus"
+    },
     {
       "columns": [
         {
@@ -187,6 +267,62 @@
       "description": "Employee of the company, with manager and department.",
       "label": "emp",
       "name": "emp"
+    },
+    {
+      "columns": [
+        {
+          "concept": {
+            "comment": "Primary key of the pet: its name.",
+            "dialectType": "VARCHAR",
+            "label": "Pet Name",
+            "typeFamily": "TEXT"
+          },
+          "name": "pname",
+          "namePos": 0,
+          "nullable": false,
+          "pkPos": 1
+        },
+        {
+          "concept": {
+            "comment": "Employee number of the owner; blank for TRAMP, who has none.",
+            "dialectType": "INTEGER",
+            "label": "Owner",
+            "typeFamily": "INTEGER"
+          },
+          "name": "empno",
+          "namePos": 0,
+          "nullable": true,
+          "pkPos": 0
+        },
+        {
+          "concept": {
+            "comment": "Species of the pet: CAT, DOG or HAMSTER.",
+            "dialectType": "VARCHAR",
+            "label": "Species",
+            "typeFamily": "TEXT"
+          },
+          "name": "species",
+          "namePos": 0,
+          "nullable": false,
+          "pkPos": 0
+        },
+        {
+          "concept": {
+            "comment": "Age of the pet in years.",
+            "dialectType": "INTEGER",
+            "label": "Age",
+            "typeFamily": "INTEGER"
+          },
+          "name": "age",
+          "namePos": 0,
+          "nullable": false,
+          "pkPos": 0
+        }
+      ],
+      "comment": "A pet of an employee.",
+      "description": "Pet of an employee, with species and age; eight rows, one of them without an owner.",
+      "label": "pet",
+      "name": "pet"
     },
     {
       "columns": [

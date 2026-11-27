@@ -1,6 +1,6 @@
 # scott
 
-The SCOTT sample schema (`dept`, `emp`, `salgrade`) as a koryki catalog on DuckDB, and the measures corpus that
+The SCOTT sample schema (`dept`, `emp`, `salgrade`, `bonus`, `pet`) as a koryki catalog on DuckDB, and the measures corpus that
 checks koryki's `agg()` rewrite against the query compliance cases of [Apache Ossie](https://github.com/apache/ossie).
 
 | Module | |

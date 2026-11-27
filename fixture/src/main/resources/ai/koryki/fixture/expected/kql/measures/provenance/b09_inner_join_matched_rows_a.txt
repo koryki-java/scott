@@ -1,0 +1,4 @@
+ecount : emp.emp_count
+esal : emp.sum_sal
+pcount : pet.pet_count
+page : pet.sum_age

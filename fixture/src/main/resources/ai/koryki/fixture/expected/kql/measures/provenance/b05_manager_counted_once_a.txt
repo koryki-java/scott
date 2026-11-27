@@ -1,0 +1,4 @@
+owners : emp.emp_count
+ownerssal : emp.sum_sal
+pets : pet.pet_count
+sumage : pet.sum_age

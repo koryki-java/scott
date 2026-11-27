@@ -1,0 +1,14 @@
+WITH
+aggd1 AS (
+ FIND emp e, e VIA same_owner FULL pet p
+ FETCH DISTINCT e.empno i1, e.sal c1),
+aggm1 AS (FIND aggd1 x FETCH count(x.i1) v1, sum(x.c1) v2),
+aggd2 AS (
+ FIND emp e, e VIA same_owner FULL pet p
+ FETCH DISTINCT p.pname i1, p.age c1),
+aggm2 AS (FIND aggd2 x FETCH count(x.i1) v3, sum(x.c1) v4),
+aggu AS (FIND aggm1 a FETCH a.v1 v1, a.v2 v2, to_integer(NULL) v3, to_integer(NULL) v4
+ UNIONALL
+ FIND aggm2 a FETCH to_integer(NULL) v1, to_decimal(NULL, 18, 4) v2, a.v3 v3, a.v4 v4)
+FIND aggu t
+ FETCH max(t.v1) ecount, max(t.v2) esal, max(t.v3) pcount, max(t.v4) page

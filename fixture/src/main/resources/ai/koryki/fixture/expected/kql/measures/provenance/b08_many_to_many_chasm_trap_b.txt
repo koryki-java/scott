@@ -1,0 +1,4 @@
+sal : emp.sum_sal
+bonuses : bonus.bonus_count
+bonus : bonus.sum_bonus
+pets : pet.pet_count

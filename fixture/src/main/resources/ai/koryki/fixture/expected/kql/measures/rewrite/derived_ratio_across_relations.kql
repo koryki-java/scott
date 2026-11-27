@@ -1,0 +1,14 @@
+WITH
+aggd1 AS (
+ FIND dept d, d VIA same_department emp e
+ FETCH DISTINCT e.empno i1, e.sal c1),
+aggm1 AS (FIND aggd1 x FETCH sum(x.c1) v1),
+aggd2 AS (
+ FIND dept d, d VIA same_department emp e
+ FETCH DISTINCT d.deptno i1),
+aggm2 AS (FIND aggd2 x FETCH count() v2),
+aggu AS (FIND aggm1 a FETCH a.v1 v1, to_integer(NULL) v2
+ UNIONALL
+ FIND aggm2 a FETCH to_decimal(NULL, 18, 4) v1, a.v2 v2)
+FIND aggu t
+ FETCH (to_double(max(t.v1)) / max(t.v2)) sal_per_dept

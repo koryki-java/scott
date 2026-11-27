@@ -1,0 +1,4 @@
+ecount : INTEGER
+esal : DECIMAL
+pcount : INTEGER
+page : INTEGER

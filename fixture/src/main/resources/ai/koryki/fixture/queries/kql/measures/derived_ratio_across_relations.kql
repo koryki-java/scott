@@ -1,0 +1,11 @@
+// ----------------------------------------------------------------------------
+// A derived measure: a stored ratio of measures of two tables.
+// Question: What is the payroll per department?
+// emp.sal_per_dept is defined once, as agg(emp.sum_sal) / agg(dept.dept_count).
+// The query reads it like any measure and means the same as B14's ratio: each
+// department is counted once, however many employees the join repeats it for.
+// Not in Ossie's suite, which writes the ratio in each query.
+// ----------------------------------------------------------------------------
+// KQL: a measure that is made of measures of two tables.
+FIND dept d, d VIA same_department emp e
+FETCH agg(e.sal_per_dept) sal_per_dept

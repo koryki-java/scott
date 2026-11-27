@@ -46,7 +46,7 @@ class CatalogConsistencyTest {
             table.get("columns").forEach(c -> names.add(c.get("name").asString()));
             columns.put(table.get("name").asString(), names);
         }
-        assertEquals(3, columns.size());
+        assertEquals(5, columns.size());
 
         Set<String> relations = new HashSet<>();
         for (JsonNode r : db.get("relations")) {

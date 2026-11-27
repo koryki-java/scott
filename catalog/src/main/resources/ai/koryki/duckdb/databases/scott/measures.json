@@ -48,6 +48,15 @@
         "concept": {
           "typeFamily": "FLOAT"
         }
+      },
+      {
+        "name": "sal_per_dept",
+        "label": "Payroll per department",
+        "description": "Total salary divided by the number of departments in the query: a derived measure of two tables",
+        "expression": "to_double(agg(emp.sum_sal)) / agg(dept.dept_count)",
+        "concept": {
+          "typeFamily": "FLOAT"
+        }
       }
     ],
     "dept": [
@@ -64,6 +73,40 @@
         "label": "Salary grades",
         "description": "Number of salary grades",
         "expression": "count()"
+      }
+    ],
+    "pet": [
+      {
+        "name": "pet_count",
+        "label": "Pets",
+        "description": "Number of pets",
+        "expression": "count()"
+      },
+      {
+        "name": "sum_age",
+        "label": "Total age",
+        "description": "Total age of pets",
+        "expression": "sum(age)",
+        "concept": {
+          "typeFamily": "INTEGER"
+        }
+      }
+    ],
+    "bonus": [
+      {
+        "name": "bonus_count",
+        "label": "Bonuses",
+        "description": "Number of bonuses",
+        "expression": "count()"
+      },
+      {
+        "name": "sum_bonus",
+        "label": "Total bonus",
+        "description": "Total of bonuses",
+        "expression": "sum(comm)",
+        "concept": {
+          "typeFamily": "DECIMAL"
+        }
       }
     ]
   }

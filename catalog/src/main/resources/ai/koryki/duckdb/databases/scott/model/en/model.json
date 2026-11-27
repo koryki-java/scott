@@ -1,6 +1,39 @@
 {
-  "description": "The SCOTT sample schema (dept, emp, salgrade) as loaded by the query compliance cases of Apache Ossie. Values are those of the SCOTT tables in Apache Calcite.",
+  "description": "The SCOTT sample schema (dept, emp, salgrade, bonus, pet) as loaded by the query compliance cases of Apache Ossie. Values are those of the SCOTT tables in Apache Calcite, with the bonuses and pets of Ossie.",
   "entities": [
+    {
+      "attributes": [
+        {
+          "column": "ename",
+          "comment": "Name of the employee who got the bonus.",
+          "label": "Employee Name",
+          "name": "ename"
+        },
+        {
+          "column": "job",
+          "comment": "Job title of the employee.",
+          "label": "Job",
+          "name": "job"
+        },
+        {
+          "column": "sal",
+          "comment": "Salary of the employee.",
+          "label": "Salary",
+          "name": "sal"
+        },
+        {
+          "column": "comm",
+          "comment": "Amount of the bonus, in commission.",
+          "label": "Bonus",
+          "name": "comm"
+        }
+      ],
+      "comment": "A bonus of an employee.",
+      "description": "Bonus of an employee: three rows, two for JONES and one for KING.",
+      "label": "bonus",
+      "name": "bonus",
+      "table": "bonus"
+    },
     {
       "attributes": [
         {
@@ -88,6 +121,39 @@
     {
       "attributes": [
         {
+          "column": "pname",
+          "comment": "Primary key of the pet: its name.",
+          "label": "Pet Name",
+          "name": "pname"
+        },
+        {
+          "column": "empno",
+          "comment": "Employee number of the owner; blank for TRAMP, who has none.",
+          "label": "Owner",
+          "name": "empno"
+        },
+        {
+          "column": "species",
+          "comment": "Species of the pet: CAT, DOG or HAMSTER.",
+          "label": "Species",
+          "name": "species"
+        },
+        {
+          "column": "age",
+          "comment": "Age of the pet in years.",
+          "label": "Age",
+          "name": "age"
+        }
+      ],
+      "comment": "A pet of an employee.",
+      "description": "Pet of an employee, with species and age; eight rows, one of them without an owner.",
+      "label": "pet",
+      "name": "pet",
+      "table": "pet"
+    },
+    {
+      "attributes": [
+        {
           "column": "grade",
           "comment": "Primary key of the salary grade.",
           "label": "Grade",
@@ -142,6 +208,24 @@
       "name": "same_grade",
       "relations": [
         "fk_emp_salgrade"
+      ]
+    },
+    {
+      "comment": "Employee who got the bonus.",
+      "description": "Joins bonus to emp by the name of the employee. An employee may have several bonuses.",
+      "label": "employee",
+      "name": "same_employee",
+      "relations": [
+        "fk_bonus_emp"
+      ]
+    },
+    {
+      "comment": "Owner of the pet.",
+      "description": "Joins pet to emp. An employee may have several pets, a pet has at most one owner: TRAMP has none.",
+      "label": "owner",
+      "name": "same_owner",
+      "relations": [
+        "fk_pet_emp"
       ]
     }
   ]

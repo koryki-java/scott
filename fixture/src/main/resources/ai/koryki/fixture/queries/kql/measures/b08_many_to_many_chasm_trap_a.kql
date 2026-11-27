@@ -1,0 +1,11 @@
+// ----------------------------------------------------------------------------
+// B8a. Many-to-many join: employees and their manager's pets.
+// Both sides repeat: JONES has three pets and two reports (FORD and SCOTT),
+// so the join repeats each of JONES's pets twice and each of FORD and SCOTT
+// three times. Naive SUM(e.sal) for CAT is 13900, naive COUNT(*) is 6, and
+// naive SUM(p.age) is 22.
+// Spec: 7.6, G2 (8.3)
+// ----------------------------------------------------------------------------
+// KQL: pet joins emp on its owner being the employee's manager: p.empno = e.mgr.
+FIND emp e, e [mgr = empno] pet p
+FETCH p.species ASC, agg(e.emp_count) reports, agg(e.sum_sal) reportssal, agg(p.pet_count) pets, agg(p.sum_age) sumage

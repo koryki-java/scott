@@ -1,0 +1,5 @@
+species : TEXT
+owners : INTEGER
+ownerssal : DECIMAL
+pets : INTEGER
+sumage : INTEGER

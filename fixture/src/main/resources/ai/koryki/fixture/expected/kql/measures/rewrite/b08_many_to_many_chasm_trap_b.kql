@@ -1,0 +1,20 @@
+WITH
+aggd1 AS (
+ FIND bonus b, b VIA same_employee emp e, e VIA same_owner + pet p
+ FETCH DISTINCT e.empno i1, e.ename k1, e.sal c1),
+aggm1 AS (FIND aggd1 x FETCH x.k1 k1, sum(x.c1) v1),
+aggd2 AS (
+ FIND bonus b, b VIA same_employee emp e, e VIA same_owner + pet p
+ FETCH DISTINCT b.ename i1, b.job i2, b.sal i3, b.comm i4, e.ename k1, b.comm c1),
+aggm2 AS (FIND aggd2 x FETCH x.k1 k1, count(x.i1) v2, sum(x.c1) v3),
+aggd3 AS (
+ FIND bonus b, b VIA same_employee emp e, e VIA same_owner + pet p
+ FETCH DISTINCT p.pname i1, e.ename k1),
+aggm3 AS (FIND aggd3 x FETCH x.k1 k1, count(x.i1) v4),
+aggu AS (FIND aggm1 a FETCH a.k1 k1, a.v1 v1, to_integer(NULL) v2, to_decimal(NULL, 18, 4) v3, to_integer(NULL) v4
+ UNIONALL
+ FIND aggm2 a FETCH a.k1 k1, to_decimal(NULL, 18, 4) v1, a.v2 v2, a.v3 v3, to_integer(NULL) v4
+ UNIONALL
+ FIND aggm3 a FETCH a.k1 k1, to_decimal(NULL, 18, 4) v1, to_integer(NULL) v2, to_decimal(NULL, 18, 4) v3, a.v4 v4)
+FIND aggu t
+ FETCH t.k1 ename ASC, max(t.v1) sal, max(t.v2) bonuses, max(t.v3) bonus, max(t.v4) pets

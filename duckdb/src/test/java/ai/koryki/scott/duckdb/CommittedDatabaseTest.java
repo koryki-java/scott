@@ -27,6 +27,8 @@ class CommittedDatabaseTest {
             assertEquals(4, count(s, "scott.dept"));
             assertEquals(14, count(s, "scott.emp"));
             assertEquals(5, count(s, "scott.salgrade"));
+            assertEquals(3, count(s, "scott.bonus"));
+            assertEquals(8, count(s, "scott.pet"));
             try (ResultSet rs = s.executeQuery("SELECT sum(sal), count(comm) FROM scott.emp")) {
                 rs.next();
                 assertEquals("29025.00", rs.getBigDecimal(1).toPlainString());

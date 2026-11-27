@@ -1,0 +1,8 @@
+// ----------------------------------------------------------------------------
+// B13a. CROSS JOIN.
+// All employees and all pets. Each employee is repeated 8 times, and each
+// pet 14 times.
+// ----------------------------------------------------------------------------
+// KQL: CROSS join: no condition, every employee with every pet.
+FIND emp e, e CROSS pet p
+FETCH agg(e.emp_count) ecount, agg(e.sum_sal) esal, agg(p.pet_count) pcount, agg(p.sum_age) page

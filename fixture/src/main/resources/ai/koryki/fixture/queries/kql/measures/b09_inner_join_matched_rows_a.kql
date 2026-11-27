@@ -1,0 +1,7 @@
+// ----------------------------------------------------------------------------
+// B9a. INNER JOIN.
+// Only employees that have a pet, and only pets that have an owner.
+// ----------------------------------------------------------------------------
+// KQL: inner join, only matched rows count.
+FIND emp e, e VIA same_owner pet p
+FETCH agg(e.emp_count) ecount, agg(e.sum_sal) esal, agg(p.pet_count) pcount, agg(p.sum_age) page

@@ -1,0 +1,5 @@
+ename : TEXT
+sal : DECIMAL
+bonuses : INTEGER
+bonus : DECIMAL
+pets : INTEGER

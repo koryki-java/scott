@@ -1,0 +1,12 @@
+// ----------------------------------------------------------------------------
+// B5a. Fan-out: the owners' salary, by species of pet.
+// The join repeats each owner once for each of their pets of the species.
+// JONES has two cats, so the join repeats JONES in the CAT group, and
+// AGG(e.sum_sal) counts JONES's salary once. Naive SUM(e.sal) for CAT is
+// 11950. SUM(DISTINCT e.sal) is no remedy: it gives 5975, because FORD and
+// SCOTT have the same salary.
+// Spec: 7.6, 8.1, G2 (8.3)
+// ----------------------------------------------------------------------------
+// KQL: the owner link; the owners are the emp side, the pets the pet side.
+FIND emp e, e VIA same_owner pet p
+FETCH p.species ASC, agg(e.emp_count) owners, agg(e.sum_sal) ownerssal, agg(p.pet_count) pets, agg(p.sum_age) sumage

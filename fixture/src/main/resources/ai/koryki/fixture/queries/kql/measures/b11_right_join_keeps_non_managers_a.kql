@@ -1,0 +1,7 @@
+// ----------------------------------------------------------------------------
+// B11a. RIGHT JOIN.
+// Only employees that have a pet, and all pets.
+// ----------------------------------------------------------------------------
+// KQL: a RIGHT join is a LEFT join with the sides swapped: all pets, the employees that own one.
+FIND pet p, p VIA same_owner + emp e
+FETCH agg(e.emp_count) ecount, agg(e.sum_sal) esal, agg(p.pet_count) pcount, agg(p.sum_age) page

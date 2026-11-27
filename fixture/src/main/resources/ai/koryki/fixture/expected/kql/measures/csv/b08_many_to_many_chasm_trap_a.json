@@ -1,0 +1,5 @@
+species : TEXT
+reports : INTEGER
+reportssal : DECIMAL
+pets : INTEGER
+sumage : INTEGER

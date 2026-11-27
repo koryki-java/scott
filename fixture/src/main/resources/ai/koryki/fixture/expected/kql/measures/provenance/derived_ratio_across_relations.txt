@@ -1,0 +1,1 @@
+sal_per_dept ~ emp.sum_sal, dept.dept_count

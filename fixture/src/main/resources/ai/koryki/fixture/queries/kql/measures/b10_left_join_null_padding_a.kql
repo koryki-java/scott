@@ -1,0 +1,7 @@
+// ----------------------------------------------------------------------------
+// B10a. LEFT JOIN.
+// All employees, and only pets that have an owner.
+// ----------------------------------------------------------------------------
+// KQL: LEFT join: all employees, the pets that have an owner.
+FIND emp e, e VIA same_owner + pet p
+FETCH agg(e.emp_count) ecount, agg(e.sum_sal) esal, agg(p.pet_count) pcount, agg(p.sum_age) page
