@@ -1,0 +1,11 @@
+// ----------------------------------------------------------------------------
+// A measure that joins a table of its own: the salary of the employees in Dallas.
+// Question: How much salary does Dallas pay, by job?
+// emp.sum_sal_dallas reads dept.loc through the link same_department, declared in the
+// measure. The query joins no department; and the query's own join to pets, which
+// repeats an employee for each pet, does not count a salary twice.
+// Not in Ossie's suite, whose measures read one table.
+// ----------------------------------------------------------------------------
+// KQL: a measure with joins, in a query that fans out.
+FIND emp e, e VIA same_owner + pet p
+FETCH e.job job, agg(e.sum_sal_dallas) dallas_sal

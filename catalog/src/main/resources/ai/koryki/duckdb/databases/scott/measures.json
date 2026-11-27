@@ -50,6 +50,22 @@
         }
       },
       {
+        "name": "sum_sal_dallas",
+        "label": "Salary in Dallas",
+        "description": "Total salary of the employees whose department is in Dallas: reads the location of the department the employee belongs to, a table the measure joins",
+        "expression": "sum(case(d.loc = 'DALLAS', sal))",
+        "joins": [
+          {
+            "alias": "d",
+            "entity": "dept",
+            "via": "same_department"
+          }
+        ],
+        "concept": {
+          "typeFamily": "DECIMAL"
+        }
+      },
+      {
         "name": "sal_per_dept",
         "label": "Payroll per department",
         "description": "Total salary divided by the number of departments in the query: a derived measure of two tables",

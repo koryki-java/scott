@@ -1,0 +1,7 @@
+WITH
+aggd1 AS (
+ FIND emp e, e VIA same_owner + pet p, e VIA same_department + dept aggj1_1
+ FETCH DISTINCT e.empno i1, e.job k1, e.sal c1, aggj1_1.loc c2),
+aggm1 AS (FIND aggd1 x FETCH x.k1 k1, sum(case(x.c2 = 'DALLAS', x.c1)) v1)
+FIND aggm1 t
+ FETCH t.k1 job, max(t.v1) dallas_sal
