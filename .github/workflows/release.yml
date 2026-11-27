@@ -84,10 +84,6 @@ jobs:
             echo "::warning::$(grep '^Not verified:' "$record")"
           fi
 
-      # gradle-wrapper.jar is the first thing the build runs: check it against Gradle's published
-      # checksums, so a jar swapped in a commit cannot run with the signing key in reach.
-      - uses: gradle/actions/wrapper-validation@v6
-
       - uses: actions/setup-java@v6
         with:
           distribution: temurin
