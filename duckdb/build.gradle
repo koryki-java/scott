@@ -54,7 +54,6 @@ tasks.named('test') { mustRunAfter 'updateDatabase' }
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            from components.java
             artifactId = 'koryki-scott-duckdb'
             pom {
                 name = 'koryki-scott-duckdb'
