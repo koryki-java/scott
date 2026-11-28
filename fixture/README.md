@@ -28,14 +28,15 @@ the script lacks.
 
 ## Status against Ossie's suite
 
-All 32 of its cases are translated, with the 8 further queries that b05, b08 and b09 to b13 hold since the scripts
-replaced the old cases (Ossie 2026-11-21): 40 queries, and the rows of all 40 equal the expected tables of the `.ost`
+All 35 of its cases are translated (Ossie main, 2026-11-28), with the 8 further queries that b05, b08 and b09 to b13 hold since the scripts
+replaced the old cases (Ossie 2026-11-21): 43 queries, and the rows of all 43 equal the expected tables of the `.ost`
 scripts (numbers compared at two decimals, the precision of the CSV golden; rows as a multiset). The further queries
 read `pet` and `bonus`, which the SCOTT data of Ossie has had since then.
 
 | Case | Result |
 |---|---|
-| a01-a12 | equal. a11 is `agg` in a scalar sub-query, a12 an outer aggregate over `agg` values and a `UNIONALL`, b03 a block with sort and limit used as `IN` filter. a09 is ROLLUP, one evaluation per grouping set (total row 2073.21, not the average of averages). a08 groups by `year(hiredate)`. a10 is the CTE's `WHERE` as a `FILTER`: what a CTE passing measures through means is not tested |
+| a01-a12 | equal. a11 is `agg` in a scalar sub-query, a12 an outer aggregate over `agg` values and a `UNIONALL`, b03 a block with sort and limit used as `IN` filter. a09 is ROLLUP, one evaluation per grouping set (total row 2073.21, not the average of averages). a08 groups by `year(hiredate)`. a10 is a CTE that fetches measures (`sum_sal`, `emp_count`) which the outer query evaluates with `agg` |
+| a13, a14, a15 | equal. a13: a chain of three CTEs passing the measures through to the outer `agg`; the CTEs stay in the SQL, the outer query aggregates their columns. a14: `agg` in a correlated scalar sub-query, which the rewriter keeps in place in the plain form. a15: a NULL measure makes the sum NULL |
 | b01, b02, b04, b05, b08, b09, b14, b18, b20 | equal (inner joins, self joins, one side counted once, ratio, HAVING) |
 | derived_ratio_across_relations | equal to b14's ratio: `emp.sal_per_dept`, a stored `agg(emp.sum_sal) / agg(dept.dept_count)` (not in Ossie's suite) |
 | joined_measure_by_job | `emp.sum_sal_dallas` reads `dept.loc` through a join the measure declares, in a query that fans out through pets: each salary counted once (not in Ossie's suite) |

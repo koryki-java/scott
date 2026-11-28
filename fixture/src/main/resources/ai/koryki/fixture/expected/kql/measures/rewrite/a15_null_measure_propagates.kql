@@ -1,0 +1,2 @@
+FIND emp e
+ FETCH e.deptno deptno ASC, sum(e.sal) + sum(e.comm) totalpay

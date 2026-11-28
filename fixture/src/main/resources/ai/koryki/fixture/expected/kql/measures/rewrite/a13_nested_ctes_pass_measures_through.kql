@@ -1,0 +1,13 @@
+WITH
+staff AS (
+  FIND emp e
+  FILTER e.job IN ('CLERK', 'SALESMAN')
+  FETCH e.deptno deptno, e.sal payroll, 1 headcount),
+staff2 AS (
+  FIND staff s
+  FETCH s.deptno deptno, s.payroll payroll, s.headcount headcount),
+staff3 AS (
+  FIND staff2 t
+  FETCH t.deptno deptno, t.payroll payroll, t.headcount headcount)
+FIND staff3 u
+FETCH u.deptno deptno ASC, sum(u.payroll) payroll, count(u.headcount) headcount
