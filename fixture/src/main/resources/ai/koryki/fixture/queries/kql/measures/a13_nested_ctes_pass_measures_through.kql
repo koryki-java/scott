@@ -1,0 +1,20 @@
+// ----------------------------------------------------------------------------
+// A13. Nested CTEs pass measures through.
+// Question: Counting only clerks and salesmen, what are the payroll and the
+//   headcount of each department?
+// Three CTEs in a chain rename and pass the measures through; the outer query
+// evaluates them. Same rows as A10.
+// ----------------------------------------------------------------------------
+// KQL: three CTEs in a chain; the first fetches the measures as columns and restricts the rows, the others pass the columns on, the outer query evaluates them with agg().
+WITH staff AS (
+  FIND emp e
+  FILTER e.job IN ('CLERK', 'SALESMAN')
+  FETCH e.deptno deptno, e.sum_sal payroll, e.emp_count headcount),
+staff2 AS (
+  FIND staff s
+  FETCH s.deptno deptno, s.payroll payroll, s.headcount headcount),
+staff3 AS (
+  FIND staff2 t
+  FETCH t.deptno deptno, t.payroll payroll, t.headcount headcount)
+FIND staff3 u
+FETCH u.deptno ASC, agg(u.payroll) payroll, agg(u.headcount) headcount

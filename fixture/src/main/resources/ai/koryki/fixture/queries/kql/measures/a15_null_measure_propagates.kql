@@ -1,0 +1,9 @@
+// ----------------------------------------------------------------------------
+// A15. A NULL measure makes a scalar expression NULL.
+// Question: What is the total of salaries and commissions of each department?
+// The sum of the commissions of departments 10 and 20 is NULL, so the total is
+// NULL there; no COALESCE makes it zero.
+// ----------------------------------------------------------------------------
+// KQL: scalar operation on two measure values, no COALESCE.
+FIND emp e
+FETCH e.deptno ASC, agg(e.sum_sal) + agg(e.sum_comm) totalpay

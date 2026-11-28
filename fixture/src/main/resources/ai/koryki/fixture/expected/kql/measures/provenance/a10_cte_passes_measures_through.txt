@@ -1,2 +1,0 @@
-payroll : emp.sum_sal
-headcount : emp.emp_count

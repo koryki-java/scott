@@ -1,0 +1,3 @@
+deptno : INTEGER
+payroll : DECIMAL
+headcount : INTEGER

@@ -1,0 +1,5 @@
+FIND emp e
+ FILTER e.sal > (FIND emp x
+ FILTER x.deptno = e.deptno
+ FETCH avg(to_double(x.sal)) avg_sal)
+ FETCH e.deptno deptno ASC, count() empcount
